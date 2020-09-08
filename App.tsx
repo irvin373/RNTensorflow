@@ -12,9 +12,9 @@ import * as mobilenet from '@tensorflow-models/mobilenet';
 import { fetch, decodeJpeg, cameraWithTensors } from '@tensorflow/tfjs-react-native';
 import * as FileSystem from 'expo-file-system'
 
-const TensorCamera = cameraWithTensors(Camera);
+// const TensorCamera = cameraWithTensors(Camera);
 
-export class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -76,7 +76,7 @@ export class App extends React.Component {
     // const imageAssetPath = Image.resolveAssetSource(image);
     // const response = await fetch('https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg', {}, { isBinary: true });
     // const imageData = await response.arrayBuffer();
-    console.log('->', imgBuffer, raw)
+    // console.log('->', imgBuffer, raw)
     // const imageTensor = decodeJpeg(imageData);
     // const prediction = await model.classify(imageTensor);
     
@@ -104,7 +104,7 @@ export class App extends React.Component {
 
     
     return (<View style={{flex: 1, justifyContent: 'center'}}>
-      <TensorCamera
+      {/* <TensorCamera
        // Standard Camera props
        style={{flex: 1}}
        type={Camera.Constants.Type.front}
@@ -116,7 +116,7 @@ export class App extends React.Component {
        resizeDepth={3}
        onReady={this.handleCameraStream}
        autorender={true}
-      />
+      /> */}
       {/* <Image source={require('./catsmall.jpg')} /> */}
       <Text>{this.state.isTfReady ? 'Si' : 'No'}</Text>
       <Text>{this.state.prediction}</Text>

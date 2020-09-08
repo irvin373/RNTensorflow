@@ -20,7 +20,6 @@
     "react": "16.13.1",
     "react-native": "0.63.2",
     "react-native-fs": "^2.16.6",
-    "react-native-navigation": "^6.12.2",
     "react-native-unimodules": "^0.10.1"
   },
   "devDependencies": {

@@ -61,7 +61,7 @@ export class App extends React.Component {
     // Wait for tf to be ready.
     await tf.ready();
     // Signal to the app that tensorflow.js can now be used.
-    // const model = await mobilenet.load();
+    const model = await mobilenet.load();
     
     // const fileUri = './assets/catsmall.jpg';      
     // const imgB64 = await FileSystem.readAsStringAsync(fileUri, {
@@ -76,7 +76,7 @@ export class App extends React.Component {
     // const imageAssetPath = Image.resolveAssetSource(image);
     // const response = await fetch('https://ichef.bbci.co.uk/news/976/cpsprodpb/12A9B/production/_111434467_gettyimages-1143489763.jpg', {}, { isBinary: true });
     // const imageData = await response.arrayBuffer();
-    console.log('->', imgBuffer, raw)
+    // console.log('->', imgBuffer, raw)
     // const imageTensor = decodeJpeg(imageData);
     // const prediction = await model.classify(imageTensor);
     
@@ -104,7 +104,7 @@ export class App extends React.Component {
 
     
     return (<View style={{flex: 1, justifyContent: 'center'}}>
-      <TensorCamera
+      {/* <TensorCamera
        // Standard Camera props
        style={{flex: 1}}
        type={Camera.Constants.Type.front}
@@ -116,7 +116,7 @@ export class App extends React.Component {
        resizeDepth={3}
        onReady={this.handleCameraStream}
        autorender={true}
-      />
+      /> */}
       {/* <Image source={require('./catsmall.jpg')} /> */}
       <Text>{this.state.isTfReady ? 'Si' : 'No'}</Text>
       <Text>{this.state.prediction}</Text>

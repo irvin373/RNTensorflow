@@ -59,7 +59,7 @@ export class App extends React.Component {
  
   async componentDidMount() {
     // Wait for tf to be ready.
-    await tf.ready();
+    // await tf.ready();
     // Signal to the app that tensorflow.js can now be used.
     const model = await mobilenet.load();
     

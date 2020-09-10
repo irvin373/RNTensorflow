@@ -1,4 +1,6 @@
-import SQLite from 'react-native-sqlite-2';
+// import SQLite from 'react-native-sqlite-2';
+import { openDatabase } from 'react-native-sqlite-storage';
+
 import {createTables, inserts, dropTables} from '../query/createTable';
 const database_name = 'test.db';
 const database_version = '1.0';
@@ -8,7 +10,8 @@ const database_size = 200000;
 class Database {
   db: any = null;
   constructor () {
-    this.db = SQLite.openDatabase(
+    // this.db = SQLite.openDatabase(
+    this.db = openDatabase(
       database_name,
       database_version,
       database_displayname,
@@ -22,7 +25,7 @@ class Database {
     return new Promise((resolve, reject) => {
       this.db.transaction((txn: any) => {
         txn.executeSql(query, [], (tx, res) => {
-          resolve(res.rows._array);
+          resolve(res.rows.raw());
         }, (e: string) => {
           console.log(e);
           reject(e);
@@ -38,11 +41,11 @@ class Database {
   populateDB () {
     return new Promise((resolve, reject) => {
       this.db.transaction((txn: any) => {
-        txn.executeSql(dropTables);
-        [...createTables, ...inserts].forEach(query => {
+        [...dropTables, ...createTables, ...inserts].forEach(query => {
           txn.executeSql(query);
         })
-        txn.executeSql("SELECT * FROM `MedicalGroup`", [], (tx, res) => {
+        txn.executeSql("SELECT * FROM MedicalGroup", [], (tx, res) => {
+          // console.log('-->', res.rows.raw())
           resolve(res);
         }, (e: string) => {
           console.log(e);

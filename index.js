@@ -61,11 +61,8 @@ class HomeApp extends React.Component {
   };
   async componentDidMount() {
     await tf.ready();
-    console.log('--> start populate');
     await DataBase.populateDB();
-    console.log('--> end populate');
-    const data = await DataBase.getQuery("SELECT p.name, m.name FROM Plant p INNER JOIN MedicalGroup m on p.MedicalGroupId = m.id;");
-    console.log('-->', data);
+    // const data = await DataBase.getQuery("SELECT p.name, m.name as medicalGroup FROM Plant p INNER JOIN MedicalGroup m on p.MedicalGroupId = m.id;");
     this.setState({ready: true});
   }
 

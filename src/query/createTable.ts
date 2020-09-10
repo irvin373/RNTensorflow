@@ -1,7 +1,7 @@
-export const dropTables = `DROP TABLE IF EXISTS MedicalGroup;
-DROP TABLE IF EXISTS Recipe;
-DROP TABLE IF EXISTS Plant_to_Recipe;
-DROP TABLE IF EXISTS Plant;`;
+export const dropTables = [`DROP TABLE IF EXISTS MedicalGroup;`,
+`DROP TABLE IF EXISTS Recipe;`,
+`DROP TABLE IF EXISTS Plant_to_Recipe;`,
+`DROP TABLE IF EXISTS Plant;`];
 
 export const createTables = [`CREATE TABLE IF NOT EXISTS MedicalGroup (
 	id	INTEGER NOT NULL UNIQUE,

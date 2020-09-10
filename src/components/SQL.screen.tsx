@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 
 import SQLite from 'react-native-sqlite-2';
+import { FloatingAction } from "react-native-floating-action";
 
 const database_name = 'test.db'
 const database_version = '1.0'
@@ -292,6 +293,7 @@ export default class ReactNativeSQLite2Test extends Component {
 
   render() {
     const { progress } = this.state
+    
     return (
       <SafeAreaView style={styles.mainContainer}>
         <TouchableOpacity style={styles.toolbar} onPress={() => this.runDemo()}>
@@ -301,6 +303,18 @@ export default class ReactNativeSQLite2Test extends Component {
           data={progress}
           renderItem={this.renderProgressEntry}
           style={listStyles.liContainer}
+        />
+        <FloatingAction
+          actions={[{
+            text: "Accessibility",
+            icon: require("../../assets/add.png"),
+            name: "bt_accessibility",
+          }]}
+          overrideWithAction
+          onPressItem={name => {
+            this.props.navigation.navigate('Camera');
+            console.log("Icon pressed", `the icon ${name} was pressed`);
+          }}
         />
       </SafeAreaView>
     )

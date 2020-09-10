@@ -9,6 +9,7 @@ import {name as appName} from './app.json';
 import DataBase from './src/utils/DataBase';
 import SQLScreen from './src/components/SQL.screen'
 import InitialScreen from './src/components/Initial.screen';
+import Camera from './src/components/Home.screen';
 
 
 function DetailsScreen() {
@@ -74,8 +75,10 @@ class HomeApp extends React.Component {
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Home" component={HomeStackScreen} />
+          <Tab.Screen name="Camera" component={Camera} />
           <Tab.Screen name="Settings" component={SettingsStackScreen} />
         </Tab.Navigator>
+        
       </NavigationContainer>
     );
   }

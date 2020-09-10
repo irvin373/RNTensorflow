@@ -5,25 +5,16 @@ import { NavigationContainer,  } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {AppRegistry, Button, Text, View} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import App from './App';
 import {name as appName} from './app.json';
+import DataBase from './src/utils/DataBase';
+import SQLScreen from './src/components/SQL.screen'
+import InitialScreen from './src/components/Initial.screen';
+
 
 function DetailsScreen() {
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text>Details!</Text>
-    </View>
-  );
-}
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Home screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
     </View>
   );
 }
@@ -45,7 +36,7 @@ const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="Home" component={SQLScreen} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
     </HomeStack.Navigator>
   );
@@ -65,11 +56,23 @@ function SettingsStackScreen() {
 const Tab = createBottomTabNavigator();
 
 class HomeApp extends React.Component {
+  state = {
+    ready: false
+  };
   async componentDidMount() {
     await tf.ready();
+    console.log('--> start populate');
+    await DataBase.populateDB();
+    console.log('--> end populate');
+    const data = await DataBase.getQuery("SELECT p.name, m.name FROM Plant p INNER JOIN MedicalGroup m on p.MedicalGroupId = m.id;");
+    console.log('-->', data);
+    this.setState({ready: true});
   }
 
   render() {
+    if (!this.state.ready) {
+      return(<InitialScreen />)
+    }
     return (
       <NavigationContainer>
         <Tab.Navigator>

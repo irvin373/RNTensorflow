@@ -10,6 +10,8 @@ import DataBase from './src/utils/DataBase';
 import SQLScreen from './src/components/SQL.screen'
 import InitialScreen from './src/components/Initial.screen';
 import Camera from './src/components/Home.screen';
+import Home from './src/components/Home.screen';
+import TFModel from './src/utils/TFModel';
 
 
 function DetailsScreen() {
@@ -37,7 +39,7 @@ const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={SQLScreen} />
+      <HomeStack.Screen name="Home" component={Home} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
     </HomeStack.Navigator>
   );

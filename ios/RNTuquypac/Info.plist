@@ -18,6 +18,10 @@
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
+	<key>NSCameraUsageDescription</key>
+	<string>You will be able to share pictures with the other users !</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>You will be able to share pictures with the other users !</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>

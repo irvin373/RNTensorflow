@@ -13,6 +13,7 @@ type SingleFileRequestType = {multiple?: false, showRemovePhoto?: boolean, media
 type MultipleFileRequestType = {multiple: true, showRemovePhoto?: boolean, mediaType?: MediaType};
 
 interface Props {
+  onTakePicture: (uri: string) => void
 }
 
 interface State {
@@ -50,7 +51,7 @@ export default class FilePicker extends Component<Props, State> {
     }
   }
 
-  async openImagePicker ({type}) {
+  async openImagePicker ({type}): Promise<any> {
     try {
       let result: any;
       const baseConfiguration = {
@@ -82,6 +83,7 @@ export default class FilePicker extends Component<Props, State> {
         resolve: false,
         reject: false
       }, () => resolve && resolve(result));
+      return result;
     } catch (e) {
       let message = 'USER_CANCELED';
       if (e.message) {
@@ -91,7 +93,7 @@ export default class FilePicker extends Component<Props, State> {
       this.setState({
         resolve: false,
         reject: false
-      }, () => reject(new Error(message)));
+      }, () => { console.log(reject) });
     }
   }
 
@@ -130,8 +132,9 @@ export default class FilePicker extends Component<Props, State> {
           icon: require("../../assets/add.png"),
           name: "photo",
         }]}
-        onPressItem={name => {
-          this.openImagePicker({type: name})
+        onPressItem={async name => {
+          const result = await this.openImagePicker({type: name});
+          this.props.onTakePicture(result.path);
           console.log("Icon pressed", `the icon ${name} was pressed`);
         }}
       />

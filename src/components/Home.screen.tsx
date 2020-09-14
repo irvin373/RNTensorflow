@@ -13,7 +13,7 @@ const modelJson = require('../../assets/model.json');
 const modelWeights = require('../../assets/group1-shard1of1.bin');
 
 export default class Home extends React.Component {
-  model: tf.GraphModel | null = null; // any //mobilenet.MobileNet | null =  null;
+  model: tf.GraphModel | null = null; // mobilenet.MobileNet | null = null; // tf.LayersModel | null = null;
   state = {
     ready: false
   }
@@ -34,8 +34,9 @@ export default class Home extends React.Component {
     await tf.ready();
     // this.model = await mobilenet.load();
     // this.model = await mobilenet.load({version: 2, modelUrl: bundleResourceIO(modelJson, modelWeights)});
+    // this.model.load();
     this.model = await tf.loadGraphModel(bundleResourceIO(modelJson, modelWeights));
-    await this.model.load();
+    await this.model?.load();
     // this.model?.loadSync({});
     // this.model = await tf.loadGraphModel(bundleResourceIO(modelJson, modelWeights));
     // console.log('-->', model)
@@ -48,11 +49,12 @@ export default class Home extends React.Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>{this.state.ready ? 'Done' : 'Loading...'}</Text>
         <FilePicker onTakePicture={async (uri) => {
-          console.log('-->', this.model?.outputNodes)
+          // console.log('-->', this.model?.)
           const imageTensor = await (await this.imageToTensor(uri));
-          const prediction = await this.model?.executeAsync(imageTensor) // (imageTensor);
+          const prediction = await this.model?.predict(imageTensor) // (imageTensor);
           // const prediction = this.model?.predict(imageTensor);
-          console.log('-->', prediction)
+          console.log('-->', prediction?.dataSync())
+          console.log('-->', prediction?.dispose())
         }} />
       </View>
     );

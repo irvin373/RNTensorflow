@@ -7,11 +7,8 @@ import {AppRegistry, Button, Text, View} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {name as appName} from './app.json';
 import DataBase from './src/utils/DataBase';
-import SQLScreen from './src/components/SQL.screen'
-import InitialScreen from './src/components/Initial.screen';
-import Camera from './src/components/Home.screen';
-import Home from './src/components/Home.screen';
-import TFModel from './src/utils/TFModel';
+import Camera from './src/screens/Camera.screen';
+import PlantScreen from './src/screens/Plants.screen';
 
 
 function DetailsScreen() {
@@ -39,7 +36,7 @@ const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={Home} />
+      <HomeStack.Screen name="Home" component={PlantScreen} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
     </HomeStack.Navigator>
   );
@@ -71,7 +68,7 @@ class HomeApp extends React.Component {
 
   render() {
     if (!this.state.ready) {
-      return(<InitialScreen />)
+      return(<SettingsScreen />)
     }
     return (
       <NavigationContainer>

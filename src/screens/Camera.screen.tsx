@@ -1,13 +1,9 @@
 import * as React from 'react';
-import {Text, View, Image} from 'react-native';
-import FilePicker from './ActionCamera.component';
-import { fetch, decodeJpeg, bundleResourceIO,  } from '@tensorflow/tfjs-react-native';
-
-import * as mobilenet from '@tensorflow-models/mobilenet';
+import {Text, View} from 'react-native';
+import FilePicker from '../components/ActionCamera.component';
+import { decodeJpeg, bundleResourceIO } from '@tensorflow/tfjs-react-native';
 import * as tf from '@tensorflow/tfjs'
 import * as FileSystem from 'expo-file-system';
-import { ready } from '@tensorflow/tfjs';
-// import {} from '../../assets/'
 
 const modelJson = require('../../assets/model.json');
 const modelWeights = require('../../assets/group1-shard1of1.bin');
@@ -19,7 +15,6 @@ export default class Home extends React.Component {
   }
 
   async imageToTensor(fileUri: string) {
-    // let photo = await this.camera.takePictureAsync();
     const imgB64 = await FileSystem.readAsStringAsync(fileUri, {
       encoding: FileSystem.EncodingType.Base64,
     });
@@ -49,12 +44,10 @@ export default class Home extends React.Component {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>{this.state.ready ? 'Done' : 'Loading...'}</Text>
         <FilePicker onTakePicture={async (uri) => {
-          // console.log('-->', this.model?.)
           const imageTensor = await (await this.imageToTensor(uri));
-          const prediction = await this.model?.predict(imageTensor) // (imageTensor);
-          // const prediction = this.model?.predict(imageTensor);
-          console.log('-->', prediction?.dataSync())
-          console.log('-->', prediction?.dispose())
+          const prediction = await this.model?.predict(imageTensor)  as tf.Tensor
+          console.log('-->', prediction.dataSync())
+          console.log('-->', prediction)
         }} />
       </View>
     );

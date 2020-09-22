@@ -21,7 +21,7 @@ class Database {
     )
   }
 
-  getQuery (query: string) {
+  getQuery (query: string): Promise<any[]> {
     return new Promise((resolve, reject) => {
       this.db.transaction((txn: any) => {
         txn.executeSql(query, [], (tx, res) => {

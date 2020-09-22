@@ -67,6 +67,7 @@ class HomeApp extends React.Component {
   }
 
   render() {
+    console.log('-->', this.state.ready)
     if (!this.state.ready) {
       return(<SettingsScreen />)
     }

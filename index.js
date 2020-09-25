@@ -10,6 +10,7 @@ import DataBase from './src/utils/DataBase';
 import Camera from './src/screens/Camera.screen';
 import PlantScreen from './src/screens/Plants.screen';
 import PlantDetail from './src/screens/PlantDetail.screen';
+import RecipeDetail from './src/screens/RecipeDetail.screen';
 import RecipeScreen from './src/screens/Recipes.screen';
 import color from './src/utils/color';
 
@@ -23,14 +24,6 @@ const headerStyle = {
     fontSize: 21
   },
 };
-
-function DetailsScreen() {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Details!</Text>
-    </View>
-  );
-}
 
 function SettingsScreen({ navigation }) {
   return (
@@ -68,7 +61,7 @@ function SettingsStackScreen() {
   return (
     <SettingsStack.Navigator>
       <SettingsStack.Screen options={headerStyle} name="Recetas" component={RecipeScreen} />
-      <SettingsStack.Screen name="Details" component={DetailsScreen} />
+      <SettingsStack.Screen options={headerStyle} name="RecipeDetails" component={RecipeDetail} />
     </SettingsStack.Navigator>
   );
 }

@@ -37,8 +37,8 @@ export default function RecipeList({ navigation }: {navigation: any}) {
         data={recipes}
         renderItem={({item}) => <RecipeCard data={item}
         openDetail={(id) => {
-          navigation.push('Details', {
-            plantId: id
+          navigation.push('RecipeDetails', {
+            recipeId: id
           });
         }} />}
       />

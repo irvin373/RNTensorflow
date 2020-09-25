@@ -1,8 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {
-  Text,
-  View,
-  FlatList,
   Image, Dimensions
 } from 'react-native';
 const { width: dw } = Dimensions.get('window');
@@ -14,11 +11,17 @@ const images = {
   'munaandina.jpg': require('../../assets/img/munaandina.jpg'),
   'toronjil.jpg': require('../../assets/img/toronjil.jpg'),
   'wirawira.jpg': require('../../assets/img/wirawira.jpg'),
+  'chevron': require('../../assets/img/chevron.png'),
 };
 
 export type ImageName = keyof typeof images;
 
-export default function TQImage({name, height = 80}: {name: ImageName, height?: number}) {
+export default function TQImage({name, height = 140, fullsize = false, iconSize = 0}: {name: ImageName, iconSize?: number, height?: number, fullsize?: boolean}) {
   const source = images[name];
-  return (<Image source={source} style={{height: 140, width: dw - 16}} />);
+  let width = fullsize ? dw : dw - 16;
+  if (iconSize) {
+    height = iconSize;
+    width = iconSize;
+  }
+  return (<Image source={source} style={{height, width}} />);
 }

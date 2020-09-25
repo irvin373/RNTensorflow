@@ -9,8 +9,20 @@ import {name as appName} from './app.json';
 import DataBase from './src/utils/DataBase';
 import Camera from './src/screens/Camera.screen';
 import PlantScreen from './src/screens/Plants.screen';
+import PlantDetail from './src/screens/PlantDetail.screen';
 import RecipeScreen from './src/screens/Recipes.screen';
+import color from './src/utils/color';
 
+const headerStyle = {
+  headerStyle: {
+    backgroundColor: color.greenHeader,
+  },
+  headerTintColor: '#fff',
+  headerTitleStyle: {
+    fontWeight: 'bold',
+    fontSize: 21
+  },
+};
 
 function DetailsScreen() {
   return (
@@ -33,22 +45,29 @@ function SettingsScreen({ navigation }) {
 }
 
 const HomeStack = createStackNavigator();
-
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Plantas" component={PlantScreen} />
-      <HomeStack.Screen name="Details" component={DetailsScreen} />
+      <HomeStack.Screen options={headerStyle} name="Plantas" component={PlantScreen} />
+      <HomeStack.Screen options={headerStyle} name="PlantDetail" component={PlantDetail} />
     </HomeStack.Navigator>
   );
 }
 
-const SettingsStack = createStackNavigator();
+const CameraStack = createStackNavigator();
+function CameraStackScreen() {
+  return (
+    <CameraStack.Navigator>
+      <HomeStack.Screen options={headerStyle} name="Camara" component={Camera} />
+    </CameraStack.Navigator>
+  );
+}
 
+const SettingsStack = createStackNavigator();
 function SettingsStackScreen() {
   return (
     <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Recetas" component={RecipeScreen} />
+      <SettingsStack.Screen options={headerStyle} name="Recetas" component={RecipeScreen} />
       <SettingsStack.Screen name="Details" component={DetailsScreen} />
     </SettingsStack.Navigator>
   );
@@ -76,7 +95,7 @@ class HomeApp extends React.Component {
       <NavigationContainer>
         <Tab.Navigator>
           <Tab.Screen name="Plantas" component={HomeStackScreen} />
-          <Tab.Screen name="Camara" component={Camera} />
+          <Tab.Screen name="Camara" component={CameraStackScreen} />
           <Tab.Screen name="Recetas" component={SettingsStackScreen} />
         </Tab.Navigator>
         

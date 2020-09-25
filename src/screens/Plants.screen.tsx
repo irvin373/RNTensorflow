@@ -37,7 +37,9 @@ export default function PlantList({ navigation }: {navigation: any}) {
         data={plants}
         renderItem={({item}) => <PlantCard data={item}
         openDetail={(id) => {
-          navigation.navigate('Details');
+          navigation.push('PlantDetail', {
+            plantId: id
+          });
         }} />}
       />
     </View>

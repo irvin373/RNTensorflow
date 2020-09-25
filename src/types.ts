@@ -8,3 +8,10 @@ export type PlantType = {
   description: string,
   MedicalName: string
 };
+
+export type RecipeType = {
+  id: number, 
+  name: string,
+  imageName: ImageName,
+  preparation: string
+};

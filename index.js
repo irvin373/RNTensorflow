@@ -9,6 +9,7 @@ import {name as appName} from './app.json';
 import DataBase from './src/utils/DataBase';
 import Camera from './src/screens/Camera.screen';
 import PlantScreen from './src/screens/Plants.screen';
+import RecipeScreen from './src/screens/Recipes.screen';
 
 
 function DetailsScreen() {
@@ -36,7 +37,7 @@ const HomeStack = createStackNavigator();
 function HomeStackScreen() {
   return (
     <HomeStack.Navigator>
-      <HomeStack.Screen name="Home" component={PlantScreen} />
+      <HomeStack.Screen name="Plantas" component={PlantScreen} />
       <HomeStack.Screen name="Details" component={DetailsScreen} />
     </HomeStack.Navigator>
   );
@@ -47,7 +48,7 @@ const SettingsStack = createStackNavigator();
 function SettingsStackScreen() {
   return (
     <SettingsStack.Navigator>
-      <SettingsStack.Screen name="Settings" component={SettingsScreen} />
+      <SettingsStack.Screen name="Recetas" component={RecipeScreen} />
       <SettingsStack.Screen name="Details" component={DetailsScreen} />
     </SettingsStack.Navigator>
   );
@@ -74,9 +75,9 @@ class HomeApp extends React.Component {
     return (
       <NavigationContainer>
         <Tab.Navigator>
-          <Tab.Screen name="Home" component={HomeStackScreen} />
-          <Tab.Screen name="Camera" component={Camera} />
-          <Tab.Screen name="Settings" component={SettingsStackScreen} />
+          <Tab.Screen name="Plantas" component={HomeStackScreen} />
+          <Tab.Screen name="Camara" component={Camera} />
+          <Tab.Screen name="Recetas" component={SettingsStackScreen} />
         </Tab.Navigator>
         
       </NavigationContainer>

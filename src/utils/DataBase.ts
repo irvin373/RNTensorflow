@@ -45,7 +45,6 @@ class Database {
           txn.executeSql(query);
         })
         txn.executeSql("SELECT * FROM MedicalGroup", [], (tx, res) => {
-          // console.log('-->', res.rows.raw())
           resolve(res);
         }, (e: string) => {
           console.log(e);

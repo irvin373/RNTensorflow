@@ -6,13 +6,13 @@ import {
 } from 'react-native';
 import DataBase from '../utils/DataBase';
 import styles from '../utils/styles';
-import {PlantType} from '../types';
+import {RecipeType} from '../types';
 import Card from '../components/MbCard.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TQImage from '../components/TQImage';
-const query = 'SELECT P.id, P.name, P.imageName, P.description, M.name as MedicalName from Plant as P INNER JOIN MedicalGroup as M on M.id = P.MedicalGroupId';
+const query = 'SELECT * from Recipe';
 
-function PlantCard({data, openDetail}: {data: PlantType, openDetail: (id: string) => void}) {
+function RecipeCard({data, openDetail}: {data: RecipeType, openDetail: (id: string) => void}) {
   return (<Card style={{flex: 1}}>
     <TouchableOpacity onPress={() => { openDetail(data.id.toString()); }}>
       <TQImage name={data.imageName} />
@@ -23,19 +23,19 @@ function PlantCard({data, openDetail}: {data: PlantType, openDetail: (id: string
   </Card>)
 }
 
-export default function PlantList({ navigation }: {navigation: any}) {
-  const [plants, setPlants] = useState<PlantType[]>([]);
+export default function RecipeList({ navigation }: {navigation: any}) {
+  const [recipes, setRecipes] = useState<RecipeType[]>([]);
   useEffect(() => {
     DataBase.getQuery(query).then(data => {
-      setPlants(data);
+      setRecipes(data);
     });
   }, []);
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         keyExtractor={(item) => `${item.id}`}
-        data={plants}
-        renderItem={({item}) => <PlantCard data={item}
+        data={recipes}
+        renderItem={({item}) => <RecipeCard data={item}
         openDetail={(id) => {
           navigation.navigate('Details');
         }} />}

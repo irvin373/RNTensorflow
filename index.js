@@ -6,6 +6,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import {AppRegistry, Button, Text, View} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {name as appName} from './app.json';
+import TQImage from './src/components/TQImage';
 import DataBase from './src/utils/DataBase';
 import Camera from './src/screens/Camera.screen';
 import PlantScreen from './src/screens/Plants.screen';
@@ -66,8 +67,14 @@ function SettingsStackScreen() {
   );
 }
 
-const Tab = createBottomTabNavigator();
+function TabOption(name, icon) {
+  return ({
+    tabBarLabel: name,
+    tabBarIcon: ({ color, size }) => (<TQImage iconSize={24} name={icon} color={color} />)
+  })
+}
 
+const Tab = createBottomTabNavigator();
 class HomeApp extends React.Component {
   state = {
     ready: false
@@ -86,12 +93,13 @@ class HomeApp extends React.Component {
     }
     return (
       <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name="Plantas" component={HomeStackScreen} />
-          <Tab.Screen name="Camara" component={CameraStackScreen} />
-          <Tab.Screen name="Recetas" component={SettingsStackScreen} />
+        <Tab.Navigator tabBarOptions={{
+            activeTintColor: color.greenHeader,
+          }}>
+          <Tab.Screen options={TabOption('Plantas', 'plant')} name="Plantas" component={HomeStackScreen} />
+          <Tab.Screen options={TabOption('Camara', 'camara')} name="Camara" component={CameraStackScreen} />
+          <Tab.Screen options={TabOption('Recetas', 'tea')} name="Recetas" component={SettingsStackScreen} />
         </Tab.Navigator>
-        
       </NavigationContainer>
     );
   }

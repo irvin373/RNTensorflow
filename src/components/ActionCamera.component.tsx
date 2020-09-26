@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import {Text, View, Platform} from 'react-native';
+import {Platform} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import { FloatingAction } from 'react-native-floating-action';
+import color from '../utils/color';
 
 type FileReturnType = any;
-
-const maxFileSize = 50;
 const filePicker: FilePicker[] = [];
 
 type MediaType = 'photo' | 'video' | 'any'
@@ -122,15 +121,18 @@ export default class FilePicker extends Component<Props, State> {
   render () {
     return (
       <FloatingAction
+        color={color.greenHeader}
         actions={[{
           text: "Camera",
-          icon: require("../../assets/add.png"),
+          icon: require("../../assets/img/camera.png"),
           name: "camera",
+          color: color.greenHeader
         },
         {
           text: "Gallery",
-          icon: require("../../assets/add.png"),
+          icon: require("../../assets/img/attachment.png"),
           name: "photo",
+          color: color.greenHeader
         }]}
         onPressItem={async name => {
           const result = await this.openImagePicker({type: name});

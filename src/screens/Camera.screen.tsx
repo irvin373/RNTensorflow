@@ -27,16 +27,8 @@ export default class Home extends React.Component {
   async componentDidMount() {
     console.clear();
     await tf.ready();
-    // this.model = await mobilenet.load();
-    // this.model = await mobilenet.load({version: 2, modelUrl: bundleResourceIO(modelJson, modelWeights)});
-    // this.model.load();
     this.model = await tf.loadGraphModel(bundleResourceIO(modelJson, modelWeights));
     await this.model?.load();
-    // this.model?.loadSync({});
-    // this.model = await tf.loadGraphModel(bundleResourceIO(modelJson, modelWeights));
-    // console.log('-->', model)
-    // const imageTensor = this.imageToTensor(image);
-    
     this.setState({ready: true});
   }
   render() {

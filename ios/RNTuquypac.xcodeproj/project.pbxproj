@@ -17,6 +17,9 @@
 		2D02E4BF1E0B4AB3006451C7 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		2DCD954D1E0B4F2C00145EB5 /* RNTuquypacTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* RNTuquypacTests.m */; };
 		5BB1851692F691D0A3876BBF /* libPods-RNTuquypac-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 14D0B4A7EA4B151E9A604174 /* libPods-RNTuquypac-tvOS.a */; };
+		7F137432251FF54E00740915 /* Lato-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F13742F251FF54E00740915 /* Lato-Regular.ttf */; };
+		7F137433251FF54E00740915 /* Lato-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F137430251FF54E00740915 /* Lato-Bold.ttf */; };
+		7F137434251FF54E00740915 /* Lato-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F137431251FF54E00740915 /* Lato-Italic.ttf */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		8C7959EE0098C189B1EDDF33 /* libPods-RNTuquypac-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 699683C37D2BD403CD6B86BA /* libPods-RNTuquypac-tvOSTests.a */; };
 		AE0E0682064A7D4249CD1212 /* libPods-RNTuquypac-RNTuquypacTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 157DF72BBA172259EB9BB21B /* libPods-RNTuquypac-RNTuquypacTests.a */; };
@@ -58,6 +61,9 @@
 		485268E9C26A50159CC381F9 /* libPods-RNTuquypac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNTuquypac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		49397237581411581FB381EC /* Pods-RNTuquypac-RNTuquypacTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNTuquypac-RNTuquypacTests.debug.xcconfig"; path = "Target Support Files/Pods-RNTuquypac-RNTuquypacTests/Pods-RNTuquypac-RNTuquypacTests.debug.xcconfig"; sourceTree = "<group>"; };
 		699683C37D2BD403CD6B86BA /* libPods-RNTuquypac-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-RNTuquypac-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7F13742F251FF54E00740915 /* Lato-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Regular.ttf"; sourceTree = "<group>"; };
+		7F137430251FF54E00740915 /* Lato-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Bold.ttf"; sourceTree = "<group>"; };
+		7F137431251FF54E00740915 /* Lato-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lato-Italic.ttf"; sourceTree = "<group>"; };
 		814C2583612E6A4BB16649F9 /* Pods-RNTuquypac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNTuquypac.debug.xcconfig"; path = "Target Support Files/Pods-RNTuquypac/Pods-RNTuquypac.debug.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = RNTuquypac/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8D94E1691BB959B05B5AB4D9 /* Pods-RNTuquypac-tvOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RNTuquypac-tvOSTests.debug.xcconfig"; path = "Target Support Files/Pods-RNTuquypac-tvOSTests/Pods-RNTuquypac-tvOSTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -125,6 +131,7 @@
 		13B07FAE1A68108700A75B9A /* RNTuquypac */ = {
 			isa = PBXGroup;
 			children = (
+				7F13742A251FF4D400740915 /* font */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
@@ -148,7 +155,6 @@
 				8D94E1691BB959B05B5AB4D9 /* Pods-RNTuquypac-tvOSTests.debug.xcconfig */,
 				D1AAC13A09146130B14C78D9 /* Pods-RNTuquypac-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -163,6 +169,16 @@
 				699683C37D2BD403CD6B86BA /* libPods-RNTuquypac-tvOSTests.a */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7F13742A251FF4D400740915 /* font */ = {
+			isa = PBXGroup;
+			children = (
+				7F137430251FF54E00740915 /* Lato-Bold.ttf */,
+				7F137431251FF54E00740915 /* Lato-Italic.ttf */,
+				7F13742F251FF54E00740915 /* Lato-Regular.ttf */,
+			);
+			path = font;
 			sourceTree = "<group>";
 		};
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
@@ -340,8 +356,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F137434251FF54E00740915 /* Lato-Italic.ttf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
+				7F137432251FF54E00740915 /* Lato-Regular.ttf in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				7F137433251FF54E00740915 /* Lato-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

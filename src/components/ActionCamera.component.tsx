@@ -60,7 +60,9 @@ export default class FilePicker extends Component<Props, State> {
             compressImageQuality: 0.9
           }
         }),
-        mediaType: this.state.mediaType
+        mediaType: this.state.mediaType,
+        width: 224,
+        height: 224
       };
       if (type === 'camera') {
         result = await ImagePicker.openCamera(baseConfiguration);
@@ -136,7 +138,13 @@ export default class FilePicker extends Component<Props, State> {
         }]}
         onPressItem={async name => {
           const result = await this.openImagePicker({type: name});
-          this.props.onTakePicture(result.path);
+          let data = await ImagePicker.openCropper({
+            path: result.uri,
+            width: 224,
+            height: 224,
+            includeBase64: true
+          } as any)
+          this.props.onTakePicture(data?.data as string);
           console.log("Icon pressed", `the icon ${name} was pressed`);
         }}
       />

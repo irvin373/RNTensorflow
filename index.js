@@ -80,7 +80,7 @@ class HomeApp extends React.Component {
     ready: false
   };
   async componentDidMount() {
-    // await tf.ready();
+    await tf.ready();
     await DataBase.populateDB();
     // const data = await DataBase.getQuery("SELECT p.name, m.name as medicalGroup FROM Plant p INNER JOIN MedicalGroup m on p.MedicalGroupId = m.id;");
     this.setState({ready: true});
@@ -97,7 +97,7 @@ class HomeApp extends React.Component {
             activeTintColor: color.greenHeader,
           }}>
           <Tab.Screen options={TabOption('Plantas', 'plant')} name="Plantas" component={HomeStackScreen} />
-          {/* <Tab.Screen options={TabOption('Camara', 'camara')} name="Camara" component={CameraStackScreen} /> */}
+          <Tab.Screen options={TabOption('Camara', 'camara')} name="Camara" component={CameraStackScreen} />
           <Tab.Screen options={TabOption('Recetas', 'tea')} name="Recetas" component={SettingsStackScreen} />
         </Tab.Navigator>
       </NavigationContainer>

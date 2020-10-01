@@ -5,7 +5,8 @@ import { decodeJpeg, bundleResourceIO, fetch } from '@tensorflow/tfjs-react-nati
 import * as tf from '@tensorflow/tfjs'
 import * as FileSystem from 'expo-file-system';
 import ImagePicker from 'react-native-image-crop-picker';
-
+import Tflite from 'tflite-react-native';
+const tflite = new Tflite();
 const modelJson = require('../../assets/model.json');
 const modelWeights = require('../../assets/group1-shard1of1.bin');
 const flowers = ['daisy', 'dandelion', 'roses', 'sunflowers' ,'tulips']
@@ -38,8 +39,20 @@ export default class Home extends React.Component {
 
   async componentDidMount() {
     console.clear();
-    await tf.ready();
-    this.model = await tf.loadGraphModel(bundleResourceIO(modelJson, modelWeights));
+    console.log('--> tflite', tflite)
+    tflite.loadModel({
+      model: 'model.tflite',// required
+      labels: 'labels.txt',  // required
+      numThreads: 1,                              // defaults to 1  
+    },
+    (err, res) => {
+      if(err)
+        console.log('-->', err);
+      else
+        console.log('-->', res);
+    });
+    // await tf.ready();
+    // this.model = await tf.loadGraphModel(bundleResourceIO(modelJson, modelWeights));
     // this.model = await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeights));
     // await this.model?.load();
     this.setState({ready: true});
@@ -67,15 +80,34 @@ export default class Home extends React.Component {
     await ImagePicker.clean();
   }
 
+  prediction2 (uri: string) {
+    tflite.runModelOnImage({
+      path: uri,
+      model: 'SSDMobileNet',
+      // imageMean: 224,
+      // imageStd: 224,
+      threshold: 0.3,       // defaults to 0.1
+      numResultsPerClass: 5,// defaults to 5
+    },
+    (err, res) => {
+      if(err)
+        console.log(err);
+      else
+        console.log(res);
+        this.setState({label: JSON.stringify(res)})
+    });
+  }
+
   render() {
     // this.takePicture();
     return (
       // <Camera style={{flex: 1}} type={Camera.Constants.Type.back} ref={ref => { this.camera = ref;}}>
         <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row'}}>
           <Text style={{ fontSize: 18, marginBottom: 10 }}> {this.state.ready ? 'Done' : 'Loading...'} </Text>
-          <Text style={{ fontSize: 18, marginBottom: 10 }}> {this.state.label} </Text>
+          <Text style={{ flex: 1, fontSize: 18, marginBottom: 10 }}> {this.state.label} </Text>
           <FilePicker onTakePicture={async (dataBase64) => {
-            this.prediction(dataBase64);
+            this.prediction2(dataBase64);
+            // this.prediction(dataBase64);
           }} />
         </View>
       // </Camera>

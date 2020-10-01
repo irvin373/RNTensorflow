@@ -12,6 +12,7 @@ target 'RNTuquypac' do
 
   target 'RNTuquypacTests' do
     inherit! :complete
+    pod 'TensorFlowLite', '1.13.1'
     # Pods for testing
   end
 

@@ -144,7 +144,8 @@ export default class FilePicker extends Component<Props, State> {
             height: 224,
             includeBase64: true
           } as any)
-          this.props.onTakePicture(data?.data as string);
+          // this.props.onTakePicture(data?.data as string);
+          this.props.onTakePicture(data?.path as string);
           console.log("Icon pressed", `the icon ${name} was pressed`);
         }}
       />

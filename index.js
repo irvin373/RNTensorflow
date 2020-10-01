@@ -80,7 +80,7 @@ class HomeApp extends React.Component {
     ready: false
   };
   async componentDidMount() {
-    await tf.ready();
+    // await tf.ready();
     await DataBase.populateDB();
     // const data = await DataBase.getQuery("SELECT p.name, m.name as medicalGroup FROM Plant p INNER JOIN MedicalGroup m on p.MedicalGroupId = m.id;");
     this.setState({ready: true});

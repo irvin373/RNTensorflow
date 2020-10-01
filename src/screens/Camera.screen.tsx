@@ -40,6 +40,7 @@ export default class Home extends React.Component {
     console.clear();
     await tf.ready();
     this.model = await tf.loadGraphModel(bundleResourceIO(modelJson, modelWeights));
+    // this.model = await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeights));
     // await this.model?.load();
     this.setState({ready: true});
   }

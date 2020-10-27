@@ -1,9 +1,13 @@
 import * as React from 'react';
-import {Text, View} from 'react-native';
+import {Alert, Text, View} from 'react-native';
 import FilePicker from '../components/ActionCamera.component';
 import * as tf from '@tensorflow/tfjs'
 import Tflite from 'tflite-react-native';
 const tflite = new Tflite();
+
+type Props = {
+  navigation: any
+}
 
 const mapedLabels = {
   'dienteleon': 10,
@@ -20,7 +24,9 @@ const mapedLabels = {
   'jengibre': 12,
 };
 
-export default class Home extends React.Component {
+type labelKeys = keyof typeof mapedLabels;
+
+export default class Home extends React.Component<Props> {
   model: tf.GraphModel | null = null; // mobilenet.MobileNet | null = null; // tf.LayersModel | null = null;
   state = {
     ready: false,
@@ -53,11 +59,25 @@ export default class Home extends React.Component {
       numResultsPerClass: 5,// defaults to 5
     },
     (err, res) => {
-      if(err)
+      if(err) {
         console.log(err);
-      else
+      }
+      else {
         console.log(res);
-        this.setState({label: JSON.stringify(res)})
+        const {navigation} = this.props;
+        const result = res[0];
+        if (result.confidence > 0.6) {
+          const labelKey:labelKeys = result.label;
+          const index = mapedLabels[labelKey];
+          navigation.navigate('Plantas');
+          navigation.push('PlantDetail', {
+            plantId: index
+          });
+          // this.setState({label: JSON.stringify(res)})
+        } else {
+          Alert.alert('Sin Coincidencia', 'La planta no esta dentro del sistema tuquypac');
+        }
+      }
     });
   }
 

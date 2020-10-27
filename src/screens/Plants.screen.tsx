@@ -1,16 +1,14 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  FlatList
-} from 'react-native';
+import {Text, View, FlatList} from 'react-native';
 import DataBase from '../utils/DataBase';
 import styles from '../utils/styles';
 import {PlantType} from '../types';
 import Card from '../components/MbCard.component';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import TQImage from '../components/TQImage';
-const query = 'SELECT P.id, P.name, P.imageName, P.description, M.name as MedicalName from Plant as P INNER JOIN MedicalGroup as M on M.id = P.MedicalGroupId';
+
+const query = `SELECT P.id, P.name, P.imageName, P.description, M.name as MedicalName
+from Plant as P INNER JOIN MedicalGroup as M on M.id = P.MedicalGroupId`;
 
 function PlantCard({data, openDetail}: {data: PlantType, openDetail: (id: string) => void}) {
   return (<Card style={{flex: 1}}>
@@ -26,7 +24,7 @@ function PlantCard({data, openDetail}: {data: PlantType, openDetail: (id: string
 export default function PlantList({ navigation }: {navigation: any}) {
   const [plants, setPlants] = useState<PlantType[]>([]);
   useEffect(() => {
-    DataBase.getQuery(query).then(data => {
+    DataBase.getQuery<PlantType>(query).then(data => {
       setPlants(data);
     });
   }, []);

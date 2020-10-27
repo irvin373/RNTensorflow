@@ -1,16 +1,13 @@
-// import SQLite from 'react-native-sqlite-2';
-import { openDatabase } from 'react-native-sqlite-storage';
-
+import { openDatabase, ResultSet, SQLiteDatabase, StatementErrorCallback, Transaction } from 'react-native-sqlite-storage';
 import {createTables, inserts, dropTables} from '../query/createTable';
-const database_name = 'test.db';
+const database_name = 'tuquypac.db';
 const database_version = '1.0';
 const database_displayname = 'SQLite Test Database';
 const database_size = 200000;
 
 class Database {
-  db: any = null;
+  db: SQLiteDatabase | null = null;
   constructor () {
-    // this.db = SQLite.openDatabase(
     this.db = openDatabase(
       database_name,
       database_version,
@@ -21,17 +18,17 @@ class Database {
     )
   }
 
-  getQuery (query: string): Promise<any[]> {
+  getQuery<T>(query: string): Promise<T[]> {
     return new Promise((resolve, reject) => {
-      this.db.transaction((txn: any) => {
-        txn.executeSql(query, [], (tx, res) => {
+      this.db?.transaction((txn: Transaction) => {
+        txn.executeSql(query, [], (tx: Transaction, res: ResultSet) => {
           resolve(res.rows.raw());
-        }, (e: string) => {
+        }, (e) => {
           console.log(e);
           reject(e);
         })
       },
-      (e: string) => {
+      (e) => {
         console.log(e);
         reject(e);
       });
@@ -40,18 +37,18 @@ class Database {
 
   populateDB () {
     return new Promise((resolve, reject) => {
-      this.db.transaction((txn: any) => {
+      this.db?.transaction((txn: any) => {
         [...dropTables, ...createTables, ...inserts].forEach(query => {
           txn.executeSql(query);
         })
-        txn.executeSql("SELECT * FROM MedicalGroup", [], (tx, res) => {
+        txn.executeSql("SELECT * FROM MedicalGroup", [], (tx: Transaction, res: ResultSet) => {
           resolve(res);
         }, (e: string) => {
           console.log(e);
           reject(e);
         })
       },
-      (e: string) => { console.log(e); });
+      (e) => { console.log(e); });
     });
   }
   

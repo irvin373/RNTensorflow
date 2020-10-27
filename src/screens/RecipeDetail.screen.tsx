@@ -10,13 +10,16 @@ import {PlantType, RecipeType} from '../types';
 import ArrowContainer from '../components/ArrowContainer.component';
 import TQImage, {ImageName} from '../components/TQImage';
 import color from '../utils/color';
-const plantsQuery = 'SELECT P.id, P.name, P.imageName, M.name as MedicalName from MedicalGroup as M, Plant as P, Plant_to_Recipe as PR WHERE P.id = PR.plantId AND PR.recipeId = {{recipeId}} AND M.id = P.MedicalGroupId';
-const recipeDetail = 'SELECT * from Recipe as R WHERE R.id = {{recipeId}} LIMIT 1';
 
 type Props = {
   navigation: any,
   route: any
 };
+
+const plantsQuery = `SELECT P.id, P.name, P.imageName, M.name as MedicalName
+FROM MedicalGroup as M, Plant as P, Plant_to_Recipe as PR
+WHERE P.id = PR.plantId AND PR.recipeId = {{recipeId}} AND M.id = P.MedicalGroupId`;
+const recipeDetail = 'SELECT * from Recipe as R WHERE R.id = {{recipeId}} LIMIT 1';
 
 function PlantCard({data, medicalGroup, openDetail}: {data: PlantType, medicalGroup: string, openDetail: (id: string) => void}) {
   return (
@@ -40,10 +43,10 @@ export default function PlantDetails({ navigation, route }: Props) {
   const [recipe, setRecipes] = useState<RecipeType>();
   useEffect(() => {
     navigation.setOptions({title: ''});
-    DataBase.getQuery(recipeQuery).then(data => {
+    DataBase.getQuery<RecipeType>(recipeQuery).then(data => {
       setRecipes(data[0]);
     });
-    DataBase.getQuery(plantQuery).then(data => {
+    DataBase.getQuery<PlantType>(plantQuery).then(data => {
       setPlant(data);
     });
   }, []);

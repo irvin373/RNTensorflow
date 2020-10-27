@@ -18,6 +18,7 @@
     "@tensorflow-models/mobilenet": "^2.0.4",
     "@tensorflow/tfjs": "^2.3.0",
     "@tensorflow/tfjs-react-native": "^0.3.0",
+    "@types/react-native-sqlite-storage": "^5.0.0",
     "expo-camera": "^8.3.1",
     "expo-gl": "^8.4.0",
     "expo-gl-cpp": "^8.4.0",

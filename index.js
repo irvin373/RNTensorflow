@@ -1,9 +1,7 @@
-import 'react-native-gesture-handler';
 import * as React from 'react';
-import * as tf from '@tensorflow/tfjs';
 import { NavigationContainer,  } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {AppRegistry, Button, Text, View} from 'react-native';
+import {AppRegistry, View} from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import {name as appName} from './app.json';
 import TQImage from './src/components/TQImage';
@@ -25,18 +23,6 @@ const headerStyle = {
     fontSize: 21
   },
 };
-
-function SettingsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Settings screen</Text>
-      <Button
-        title="Go to Details"
-        onPress={() => navigation.navigate('Details')}
-      />
-    </View>
-  );
-}
 
 const HomeStack = createStackNavigator();
 function HomeStackScreen() {
@@ -80,16 +66,14 @@ class HomeApp extends React.Component {
     ready: false
   };
   async componentDidMount() {
-    // await tf.ready();
     await DataBase.populateDB();
     // const data = await DataBase.getQuery("SELECT p.name, m.name as medicalGroup FROM Plant p INNER JOIN MedicalGroup m on p.MedicalGroupId = m.id;");
     this.setState({ready: true});
   }
 
   render() {
-    console.log('-->', this.state.ready)
     if (!this.state.ready) {
-      return(<SettingsScreen />)
+      return(<View />)
     }
     return (
       <NavigationContainer>

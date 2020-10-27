@@ -1,17 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity, FlatList
-} from 'react-native';
+import {Text, View, TouchableOpacity, FlatList} from 'react-native';
 import DataBase from '../utils/DataBase';
 import styles from '../utils/styles';
 import {PlantType, RecipeType} from '../types';
 import ArrowContainer from '../components/ArrowContainer.component';
 import TQImage, {ImageName} from '../components/TQImage';
 import color from '../utils/color';
-const recipePlant = 'SELECT * from  Recipe as R, Plant_to_Recipe as PR WHERE R.id = PR.recipeId AND PR.plantId = {{plantId}}';
-const plantDetail = 'SELECT P.id, P.name, P.imageName, P.description, M.name as MedicalName from Plant as P INNER JOIN MedicalGroup as M on M.id = P.MedicalGroupId WHERE P.id = {{plantId}} LIMIT 1';
 
 type RecipeModType = RecipeType & {
   recipeId: string
@@ -21,6 +15,13 @@ type Props = {
   navigation: any,
   route: any
 };
+
+const recipePlant = `SELECT *
+FROM  Recipe as R, Plant_to_Recipe as PR
+WHERE R.id = PR.recipeId AND PR.plantId = {{plantId}}`;
+const plantDetail = `SELECT P.id, P.name, P.imageName, P.description, M.name as MedicalName
+FROM Plant as P INNER JOIN MedicalGroup as M on M.id = P.MedicalGroupId
+WHERE P.id = {{plantId}} LIMIT 1`;
 
 function RecipeCard({data, medicalGroup, openDetail}: {data: RecipeModType, medicalGroup: string, openDetail: (id: string) => void}) {
   return (
@@ -44,10 +45,10 @@ export default function PlantDetails({ navigation, route }: Props) {
   const [recipes, setRecipes] = useState<RecipeModType[]>([]);
   useEffect(() => {
     navigation.setOptions({title: ''});
-    DataBase.getQuery(recipeQuery).then(data => {
+    DataBase.getQuery<RecipeModType>(recipeQuery).then(data => {
       setRecipes(data);
     });
-    DataBase.getQuery(plantQuery).then(data => {
+    DataBase.getQuery<PlantType>(plantQuery).then(data => {
       setPlant(data[0]);
     });
   }, []);

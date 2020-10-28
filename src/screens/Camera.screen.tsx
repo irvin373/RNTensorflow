@@ -69,6 +69,7 @@ export default class Home extends React.Component<Props> {
         if (result.confidence > 0.6) {
           const labelKey:labelKeys = result.label;
           const index = mapedLabels[labelKey];
+          console.log('-->', index, result.label)
           navigation.navigate('Plantas');
           navigation.push('PlantDetail', {
             plantId: index

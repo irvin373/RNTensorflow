@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {Text, View, TouchableOpacity, FlatList} from 'react-native';
 import DataBase from '../utils/DataBase';
-import styles from '../utils/styles';
+import styles, {markdonwStyles} from '../utils/styles';
 import {PlantType, RecipeType} from '../types';
 import ArrowContainer from '../components/ArrowContainer.component';
 import TQImage, {ImageName} from '../components/TQImage';
 import color from '../utils/color';
+import Markdown from 'react-native-markdown-display';
 
 type RecipeModType = RecipeType & {
   recipeId: string
@@ -57,7 +58,10 @@ export default function PlantDetails({ navigation, route }: Props) {
       <Text style={styles.headerName}>{plant?.name}</Text>
       <TQImage name={plant?.imageName as ImageName} fullsize height={210} />
       <View style={{padding: 16, borderBottomColor: color.cardBorder, borderBottomWidth: 1}}>
-        <Text style={styles.detailedText}>{plant?.description}</Text>
+        <Markdown style={markdonwStyles}>
+          {plant?.description || ''}
+        </Markdown>
+        <Text style={styles.detailedText}></Text>
       </View>
       <FlatList
         scrollEnabled={false}
@@ -71,7 +75,8 @@ export default function PlantDetails({ navigation, route }: Props) {
               navigation.push('RecipeDetails', {
                 recipeId: item.recipeId
               });
-            }} />
+            }}
+          />
         }
       />
     </View>

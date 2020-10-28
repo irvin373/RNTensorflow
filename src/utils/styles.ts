@@ -19,3 +19,11 @@ export default StyleSheet.create({
     fontFamily: 'Lato-Regular'
   }
 });
+
+export const markdonwStyles = StyleSheet.create({
+  heading1: {
+    fontSize: 32,
+    backgroundColor: '#000000',
+    color: '#FFFFFF',
+  },
+});

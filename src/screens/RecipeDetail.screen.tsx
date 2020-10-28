@@ -5,11 +5,12 @@ import {
   TouchableOpacity, FlatList
 } from 'react-native';
 import DataBase from '../utils/DataBase';
-import styles from '../utils/styles';
+import styles, {markdonwStyles} from '../utils/styles';
 import {PlantType, RecipeType} from '../types';
 import ArrowContainer from '../components/ArrowContainer.component';
 import TQImage, {ImageName} from '../components/TQImage';
 import color from '../utils/color';
+import Markdown from 'react-native-markdown-display';
 
 type Props = {
   navigation: any,
@@ -55,7 +56,9 @@ export default function PlantDetails({ navigation, route }: Props) {
       <Text style={styles.headerName}>{recipe?.name}</Text>
       <TQImage name={recipe?.imageName as ImageName} fullsize height={210} />
       <View style={{padding: 16, borderBottomColor: color.cardBorder, borderBottomWidth: 1}}>
-        <Text style={styles.detailedText}>{recipe?.preparation}</Text>
+        <Markdown style={markdonwStyles}>
+          {recipe?.preparation || ''}
+        </Markdown>
       </View>
       <FlatList
         scrollEnabled={false}

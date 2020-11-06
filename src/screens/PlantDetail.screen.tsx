@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Text, View, TouchableOpacity, FlatList} from 'react-native';
+import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import DataBase from '../utils/DataBase';
 import styles, {markdonwStyles} from '../utils/styles';
 import {PlantType, RecipeType} from '../types';
@@ -54,7 +54,7 @@ export default function PlantDetails({ navigation, route }: Props) {
     });
   }, []);
   return (
-    <View style={{ flex: 1, backgroundColor: color.white }}>
+    <ScrollView style={{ flex: 1, backgroundColor: color.white }}>
       <Text style={styles.headerName}>{plant?.name}</Text>
       <TQImage name={plant?.imageName as ImageName} fullsize height={210} />
       <View style={{padding: 16, borderBottomColor: color.cardBorder, borderBottomWidth: 1}}>
@@ -63,22 +63,17 @@ export default function PlantDetails({ navigation, route }: Props) {
         </Markdown>
         <Text style={styles.detailedText}></Text>
       </View>
-      <FlatList
-        scrollEnabled={false}
-        keyExtractor={(item) => item.id.toString()}
-        data={recipes}
-        renderItem={({item}) => 
-          <RecipeCard data={item} medicalGroup={plant?.MedicalName as string}
-            openDetail={() => {
-              navigation.popToTop();
-              navigation.navigate('Recetas');
-              navigation.push('RecipeDetails', {
-                recipeId: item.recipeId
-              });
-            }}
-          />
-        }
-      />
-    </View>
+      {recipes.map(item => <View key={item.id.toString()}>
+        <RecipeCard data={item} medicalGroup={plant?.MedicalName as string}
+          openDetail={() => {
+            navigation.popToTop();
+            navigation.navigate('Recetas');
+            navigation.push('RecipeDetails', {
+              recipeId: item.recipeId
+            });
+          }}
+        />
+      </View>)}
+    </ScrollView>
   );
 }

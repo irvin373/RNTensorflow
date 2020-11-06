@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import {
   Text,
   View,
-  TouchableOpacity, FlatList
+  TouchableOpacity, ScrollView
 } from 'react-native';
 import DataBase from '../utils/DataBase';
 import styles, {markdonwStyles} from '../utils/styles';
@@ -52,7 +52,7 @@ export default function PlantDetails({ navigation, route }: Props) {
     });
   }, []);
   return (
-    <View style={{ flex: 1, backgroundColor: color.white }}>
+    <ScrollView style={{ flex: 1, backgroundColor: color.white }}>
       <Text style={styles.headerName}>{recipe?.name}</Text>
       <TQImage name={recipe?.imageName as ImageName} fullsize height={210} />
       <View style={{padding: 16, borderBottomColor: color.cardBorder, borderBottomWidth: 1}}>
@@ -60,21 +60,16 @@ export default function PlantDetails({ navigation, route }: Props) {
           {recipe?.preparation || ''}
         </Markdown>
       </View>
-      <FlatList
-        scrollEnabled={false}
-        keyExtractor={(item) => item.id.toString()}
-        data={plants}
-        renderItem={({item}) => 
-          <PlantCard data={item} medicalGroup={item.MedicalName as string}
-            openDetail={() => {
-              navigation.popToTop();
-              navigation.navigate('Plantas');
-              navigation.push('PlantDetail', {
-                plantId: item.id
-              });
-            }} />
-        }
-      />
-    </View>
+      {plants.map(item => <View key={item.id.toString()}>
+        <PlantCard data={item} medicalGroup={item.MedicalName as string}
+          openDetail={() => {
+            navigation.popToTop();
+            navigation.navigate('Plantas');
+            navigation.push('PlantDetail', {
+              plantId: item.id
+            });
+          }} />
+      </View>)}
+    </ScrollView>
   );
 }

@@ -21,9 +21,26 @@ export default StyleSheet.create({
 });
 
 export const markdonwStyles = StyleSheet.create({
-  heading1: {
-    fontSize: 32,
-    backgroundColor: '#000000',
-    color: '#FFFFFF',
+  heading3: {
+    fontSize: 28,
+    color: color.textPrimary,
+    fontFamily: 'Lato-Bold'
+  },
+  strong: {
+    color: color.textPrimary,
+    fontSize: 16,
+    fontFamily: 'Lato-Bold' 
+  },
+  paragraph: {
+    color: color.textPrimary,
+    fontSize: 16,
+    fontFamily: 'Lato-Regular',
+    textAlign: 'justify'
+  },
+  list_item: {
+    color: color.textPrimary,
+    fontSize: 16,
+    fontFamily: 'Lato-Regular',
+    textAlign: 'justify'
   },
 });

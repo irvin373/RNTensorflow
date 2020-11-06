@@ -1,9 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {
-  Text,
-  View,
-  TouchableOpacity, ScrollView
-} from 'react-native';
+import { Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import DataBase from '../utils/DataBase';
 import styles, {markdonwStyles} from '../utils/styles';
 import {PlantType, RecipeType} from '../types';
@@ -53,7 +49,6 @@ export default function PlantDetails({ navigation, route }: Props) {
   }, []);
   return (
     <ScrollView style={{ flex: 1, backgroundColor: color.white }}>
-      <Text style={styles.headerName}>{recipe?.name}</Text>
       <TQImage name={recipe?.imageName as ImageName} fullsize height={210} />
       <View style={{padding: 16, borderBottomColor: color.cardBorder, borderBottomWidth: 1}}>
         <Markdown style={markdonwStyles}>

@@ -36,18 +36,156 @@ export const createTables = [`CREATE TABLE IF NOT EXISTS MedicalGroup (
 export const inserts = [`INSERT INTO "MedicalGroup" ("id","name")
 VALUES (1,'Aparato respiratorio'), (2,'digestion'), (3,'limpiza de sangre'), (4,'elevan defensas');`,
 `INSERT INTO "Plant" ("id","name","description","MedicalGroupId","imageName")
-VALUES (1,'La Muña Andina','La Muña Andina es un planta que crece en los valles interandinos del Perú, su uso se remonta a épocas pre – hispánicas, convirtiéndose en un remedio natural de invaluable valor cultural. El consumo tradicional de la muña para remediar estas afecciones se da a través de la infusión o mate,  ya que de esta forma se logra extraer sus propiedades carminativas y estomacales con una mayor eficacia.  No obstante su suave sabor a menta ha sido dedicado también a la condimentación y aromatización de los platos culinarios de la serranía suramericana desde hace siglos.',2,'munaandina.jpg'),
-(2,'Toronjil','El menta, limoncillo, la melisa u hoja de limón​ (Melissa officinalis) es una hierba perenne de la familia de las lamiáceas, nativa del sur de Europa y de la región mediterránea. Apreciada por su fuerte aroma a limón, se utiliza en infusión como tranquilizante natural, y su aceite esencial se aprovecha en perfumería.',1,'toronjil.jpg'),
-(3,'Lluvia de oro','Es un arbusto de corteza lisa, con ramas colgantes y ramitas pubescentes. Las hojas tienen un largo pedúnculo, son lisas en el haz y vellosas por el envés . Las flores son de color amarillo dorado y dulce aroma, que se agrupan en racimos colgantes de 25 cm de largo, y normalmente florecen en mayo. Los frutos son legumbres con un gran número de semillas de color negro que contienen citisina, un alcaloide extremadamente tóxico no solo para los seres humanos sino también para los caballos, sobre todo cuando no están maduras. Sin embargo, algunos animales salvajes como liebres y ciervos puede alimentar en ellos sin ningún problema. La madera es dura y pesada , de un color amarillo- marrón, ideal para el torneado de madera y como combustible. En el pasado (y hoy en la recreación histórica), fue utilizado para hacer arcos.',3,'lluviadeoro.jpg'),
-(4,'Wira wira','A esta plantita conocida como remedio para la tos, en todas partes se le da el nombre de Wira Wira o Vira Vira. Esta hierba tiene actividad comprobada como antibiótico contra bacterias y virus.',4,'wirawira.jpg'),
-(5,'Manzanilla','Para la planta de manzanilla las flores como atributo clasificador, las cuales tienen una forma peculiar entre las demás plantas medicinales.',4,'manzanilla.jpg'),
-(6,'hierba buena','Para la planta de hierba buena un rasgo visual es la forma de sus hojas mediante los bordes horizontales se notan más fuertes y su forma puntiaguda de las hojas será unos de los atributos para su clasificación.',4,'hierbabuena.jpg'),
-(7,'planta de palta','Para la planta de palta los atributos clasificadores serán la forma de la fruta y las hojas ya que en ambos casos se usan para las recetas del sistema tuquypaq.',4,'palta.jpg'),
-(8,'lavanda','lavanda la la la.',4,'lavanda.jpg'),
-(9,'mandarina','Para la planta de mandarina, un atributo clasificador es la forma de sus hojas resaltando en un filtro horizontal, igual que se usará igual la forma y color de la fruta para agregar peso a la función de activación. Sin llegar a ser un factor determinante en la clasificación.',4,'mandarina.jpg'),
-(10,'diente de leon','Para la planta de diente de león, un atributo clasificador son las flores y el villano donde se encuentran sus semillas son resultantes al aplicar filtros.',4,'dienteleon.jpg'),
-(11,'ortiga','Para la planta de ortiga la forma punteada de sus hojas son el el filtro que más resalta al momento de clasificar.',4,'ortiga.jpg'),
-(12,'Jengibre','Jengibre Jengibre Jengibre Jengibre ',4,'jengibre.jpeg');`,
+VALUES (1,'La Muña Andina','**PROPIEDADES**
+- mejora la digestión
+- alivia cólicos menstruales y mareos
+- para el Asma
+- problemas de tos
+- diarreas
+- carminativa
+- antiséptica y cicatrizante
+- antiparasitario
+- Broncodilatador
+- en halitosis mejora la visión
+
+**PARTES QUE SE USAN:** Flores, hojas, tallos',2,'munaandina.jpg'),
+(2,'Toronjil','**PROPIEDADES**
+- acción sedante
+- Insomnio
+- anti estrés
+- cardiopatias de tipo nervioso
+- Carminativa
+- resfriados y gripe
+- herpes labial (herpes simplex Antiemético
+- Antiséptica
+- Digestiva
+- Espasmos uterinos
+
+**PARTES QUE SE USAN:** Flores, hojas, tallos',1,'toronjil.jpg'),
+(3,'Lluvia de oro','**PROPIEDADES**
+- Protector hepático
+- purifica la sangre, baja la fiebre o calentura, así como en la fiebre amarilla,
+- para tratar enfermedades como el ácido úrico, reuma y problemas de cálculos en la vesícula biliar
+- digestivo en dolor de estómago, estimulante del apetito,
+- laxante, disentería, gastritis, empacho, anorexia, pirosis (acidez estomacal), atonía intestinal.
+- problemas del hígado.
+- para el dolor de muelas.
+- hipocolesterolémica, hipoglicémica,
+- sudorífica, tónico, vermífuga.
+
+**PARTES QUE SE USAN:** Flores, hojas, frutos, cortezas',3,'lluviadeoro.jpg'),
+(4,'Wira wira','**PROPIEDADES**
+- Inmunoestimulante
+- Antioxidante
+- protector celular
+- Desinflamante
+- tratamiento de la tos y gripe
+- infecciones bacterianas, virales, fúngicas
+- alivia dolores de cabeza, calambres y problemas de estómago.
+- febrífugo, antihelmintico
+- digestiva, carminativa, antiespasmódica
+- colagoga, eupéptica y emenagoga.
+- reducir colesterol.
+
+**PARTES QUE SE USAN:** Flores, hojas, tallos',4,'wirawira.jpg'),
+(5,'Manzanilla','**PROPIEDADES**
+- mejora la digestión,
+- favorece la expulsión de gases intestinales,
+- alivia dolores estomacales,
+- evita náuseas y vómitos
+- cólicos, gastritis, úlceras gástricas
+- antiinflamatorio.
+- sedantes en estrés
+- cefalea, neuralgias y migraña.
+- reduce cólicos menstruales
+
+**PARTES QUE SE USAN:** Flores, hojas, tallos',4,'manzanilla.jpg'),
+(6,'hierba buena','**PROPIEDADES**
+- En indigestión.
+- distensión abdominal y flatulencia
+- elimina la halitosis
+- Alivia las hemorroides
+- propiedades anticoagulantes
+- es afrodisíaca
+- reduce los niveles de estrés
+- problemas respiratorios
+- migraña o jaqueca
+- infecciones vaginales: vulvovaginitis, vulvitis, vaginitis o flujo vaginal (candidiasis)
+
+**PARTES QUE SE USAN:** Flores, hojas, tallos',4,'hierbabuena.jpg'),
+(7,'planta de palta','**PROPIEDADES**
+- Antioxidante
+- Inmunoestimulante
+- nutritivo
+- laxante y diurético suave astringente, antidiarreica
+- fortalece y aumenta las defensas
+- en inapetencia
+- prevenir infecciones de la vejiga
+- mareo y jaqueca
+- prevención de resfriados y gripes
+- antiescorbútico
+- el aceite mejora la piel
+
+**PARTES QUE SE USAN:** hojas, corteza, pulpa de la fruta, semilla.',4,'palta.jpg'),
+(8,'lavanda','**PROPIEDADES**
+- Analgésico
+- Sedante
+- Antiséptico
+- antioxidante
+- Antiinflamatorio
+- Anti estrés
+- Relajante
+
+**PARTES QUE SE USAN:** flor, hojas',4,'lavanda.jpg'),
+(9,'mandarina','**PROPIEDADES**
+- Anti estrés
+- afecciones del sistema circulatorio y de hipertensión Asma, actúa como broncodilatador
+- indicada para casos de ansiedad, taquicardia, depresión,
+- aceites esenciales procedentes de la cascara de la mandarina y naranjo amargo
+- en aromaterapia para problemas de insomnio
+- nervios y sudoración.
+
+**PARTES QUE SE USAN:** jugo, pulpa, cascara, flores, hojas, semillas',4,'mandarina.jpg'),
+(10,'diente de leon','**PROPIEDADES**
+- Protector hepático
+- Depurativo de la sangre
+- Mantiene correcto funcionamiento del hígado
+- Digestiva
+- Combate el acné y el eczema
+- Mejora la salud de los ojos
+- Ayuda a bajar de peso
+- Propiedad diurética
+- Sustituto del café
+
+**PARTES QUE SE USAN:** Flores, hojas, raíz.',4,'dienteleon.jpg'),
+(11,'ortiga','**PROPIEDADES**
+- Protector hepático, inmunomodulador
+- hipoglucemiante,
+- Digestiva
+- Bajar nivel del ácido úrico,
+- Antihistamínico, en alergias
+- tratamiento de la próstata
+- Alzheimer, artritis, asma, infecciones de vejiga, bronquitis, bursitis, gingivitis, gota, urticaria, cálculos renales, laringitis,
+- esclerosis múltiple, síndrome premenstrual
+- rinitis alérgica
+- Hipertension
+- tratar o prevenir la calvicie
+- Hemorragias
+- Galactogoga,
+
+**PARTES QUE SE USAN:** Flores, hojas, tallos, raíz',4,'ortiga.jpg'),
+(12,'Jengibre','**PROPIEDADES**
+- Antioxidante
+- Inmunoestimulante
+- desinflamante
+- dispepsia, digestiones lentas, gastritis crónica o inapetencia
+- Carminativa
+- cirrosis, ictericia, enfermedades hepáticas o trastornos en la vesícula biliar
+- artritis reumatoide
+- depresión (emocional o estacional)
+- enfermedades cardiovasculares
+
+**PARTES QUE SE USAN:** raíz',4,'jengibre.jpeg');`,
 `INSERT INTO "Recipe" ("id","name", "imageName", "preparation")
 VALUES (1, 'Anti-inflamatorio', 'antiinflamatorio.jpg', '### Anti-inflamatorio
 
@@ -262,7 +400,7 @@ Cuando una persona descuida su problema de presión arterial alta, se empiezan a
 **USO INTERNO**
 
 Para 1 litro de agua hervida agregar:
-- 1 cuchara de lavanda (toda la planta)
+- 1 cuchara de lavanda (flores)
 - 1 cuchara de Wira wira (flores)
 - 2 cucharas de ortiga (hojas)
 - 1 cuchara de jengibre (raíz fresca o seca)
@@ -287,7 +425,7 @@ Los populares sofocos, la sequedad vaginal y el incremento del riesgo de padecer
 
 Para 1 litro de agua hervida agregar:
 - 2 cucharas de toronjil (hojas) .
-- 1 cuchara de lavanda (toda la planta)
+- 1 cuchara de lavanda (flores)
 - 1 cuchara de jengibre (raíz fresca o seca)
 - Dejar reposar 3 minutos
 

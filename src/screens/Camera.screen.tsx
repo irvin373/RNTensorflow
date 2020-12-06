@@ -1,8 +1,11 @@
 import * as React from 'react';
-import {Alert, Text, View} from 'react-native';
-import FilePicker from '../components/ActionCamera.component';
+import {Alert, Image, Text, View, Dimensions, Platform} from 'react-native';
 import * as tf from '@tensorflow/tfjs'
+import ImagePicker from 'react-native-image-crop-picker';
 import Tflite from 'tflite-react-native';
+import styles from '../utils/styles';
+import { TouchableOpacity } from 'react-native-gesture-handler';
+const { width: dw } = Dimensions.get('window');
 const tflite = new Tflite();
 
 type Props = {
@@ -30,7 +33,8 @@ export default class Home extends React.Component<Props> {
   model: tf.GraphModel | null = null; // mobilenet.MobileNet | null = null; // tf.LayersModel | null = null;
   state = {
     ready: false,
-    label: ''
+    label: '',
+    imgSrc: require('../../assets/img/mate.jpg'),
   }
 
   async componentDidMount() {
@@ -47,6 +51,48 @@ export default class Home extends React.Component<Props> {
         console.log('--> model loaded: ', res);
     });
     this.setState({ready: true});
+  }
+
+  async openImagePicker (type: string): Promise<any> {
+    try {
+      let result: any;
+      const baseConfiguration = {
+        compressVideoPreset: 'HighestQuality',
+        ...Platform.select({
+          ios: {
+            compressImageQuality: 0.9
+          }
+        }),
+        mediaType: 'photo',
+        width: 224,
+        height: 224
+      };
+      if (type === 'camera') {
+        result = await ImagePicker.openCamera(baseConfiguration);
+      } else {
+        result = await ImagePicker.openPicker({
+          ...baseConfiguration,
+          multiple: false
+        });
+        console.log(result)
+      }
+      const resolve = this.state.resolve;
+      this.setState({
+        resolve: false,
+        reject: false
+      }, () => resolve && resolve(result));
+      return result;
+    } catch (e) {
+      let message = 'USER_CANCELED';
+      if (e.message) {
+        message = e.message.split(/[. ]/g).join('_').toUpperCase();
+      }
+      const reject = this.state.reject;
+      this.setState({
+        resolve: false,
+        reject: false
+      }, () => { console.log(reject) });
+    }
   }
 
   prediction (uri: string) {
@@ -69,7 +115,6 @@ export default class Home extends React.Component<Props> {
         if (result.confidence > 0.6) {
           const labelKey:labelKeys = result.label;
           const index = mapedLabels[labelKey];
-          console.log('-->', index, result.label)
           navigation.navigate('Plantas');
           navigation.push('PlantDetail', {
             plantId: index
@@ -84,12 +129,30 @@ export default class Home extends React.Component<Props> {
 
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: 'transparent', flexDirection: 'row'}}>
-        <Text style={{ fontSize: 18, marginBottom: 10 }}> {this.state.ready ? 'Done' : 'Loading...'} </Text>
-        <Text style={{ flex: 1, fontSize: 18, marginBottom: 10 }}> {this.state.label} </Text>
-        <FilePicker onTakePicture={async (uri) => {
-          this.prediction(uri);
-        }} />
+      <View style={{flex: 1}}>
+        <View style={{flex: 1, alignSelf: 'center', marginTop: 20}}>
+          <Text style={{flex: 1, fontSize: 18, marginHorizontal: 12}}>
+            {'Seleccione una imagen, mediante camara o la galeria para el reconocimiento'}
+          </Text>
+          <Image resizeMethod={'resize'} style={{height: dw, width: dw}} source={this.state.imgSrc} />
+          <Text style={{flex: 1, fontSize: 18, marginBottom: 10}}> {this.state.label} </Text>
+        </View>
+        <View style={{flex: 0, marginBottom: 50, flexDirection: 'row', alignSelf: 'center'}}>
+          <TouchableOpacity style={styles.actionBtn} onPress={async () => {
+            const result = await this.openImagePicker('camera');
+            this.setState({imgSrc: {uri: result.sourceURL}})
+            this.prediction(result.sourceURL);
+          }}>
+            <Text style={styles.textBtn}>Camara</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.actionBtn} onPress={async () => {
+            const result = await this.openImagePicker('gallery');
+            this.setState({imgSrc: {uri: result.sourceURL}})
+            this.prediction(result.sourceURL);
+          }}>
+            <Text style={styles.textBtn}>Galeria</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }

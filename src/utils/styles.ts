@@ -17,6 +17,22 @@ export default StyleSheet.create({
     color: color.textPrimary,
     fontSize: 16,
     fontFamily: 'Lato-Regular'
+  },
+  textBtn: {
+    fontSize: 18,
+    fontFamily: 'Lato-Bold',
+    color: color.white,
+    padding: 8
+  },
+  actionBtn: {
+    backgroundColor: color.secondarygreen,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: color.cardBorder,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 12,
+    marginHorizontal: 12,
   }
 });
 

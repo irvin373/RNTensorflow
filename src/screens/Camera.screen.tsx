@@ -127,29 +127,33 @@ export default class Home extends React.Component<Props> {
     });
   }
 
+  predictPicture = async (type: 'camera' | 'gallery') => {
+    const result = await this.openImagePicker(type);
+    let data = await ImagePicker.openCropper({
+      path: result.path,
+      width: 224,
+      height: 224,
+      // includeBase64: true
+    } as any)
+    this.setState({imgSrc: {uri: result.path}})
+    this.prediction(data.path);
+  }
+
   render() {
     return (
       <View style={{flex: 1}}>
         <View style={{flex: 1, alignSelf: 'center', marginTop: 20}}>
-          <Text style={{flex: 1, fontSize: 18, marginHorizontal: 12}}>
+          <Text style={{flex: 1, fontSize: 16, marginHorizontal: 12}}>
             {'Seleccione una imagen, mediante camara o la galeria para el reconocimiento'}
           </Text>
           <Image resizeMethod={'resize'} style={{height: dw, width: dw}} source={this.state.imgSrc} />
           <Text style={{flex: 1, fontSize: 18, marginBottom: 10}}> {this.state.label} </Text>
         </View>
         <View style={{flex: 0, marginBottom: 50, flexDirection: 'row', alignSelf: 'center'}}>
-          <TouchableOpacity style={styles.actionBtn} onPress={async () => {
-            const result = await this.openImagePicker('camera');
-            this.setState({imgSrc: {uri: result.sourceURL}})
-            this.prediction(result.sourceURL);
-          }}>
+          <TouchableOpacity style={styles.actionBtn} onPress={() => { this.predictPicture('camera'); }}>
             <Text style={styles.textBtn}>Camara</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.actionBtn} onPress={async () => {
-            const result = await this.openImagePicker('gallery');
-            this.setState({imgSrc: {uri: result.sourceURL}})
-            this.prediction(result.sourceURL);
-          }}>
+          <TouchableOpacity style={styles.actionBtn} onPress={() => { this.predictPicture('gallery'); }}>
             <Text style={styles.textBtn}>Galeria</Text>
           </TouchableOpacity>
         </View>

@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {Text, View} from 'react-native';
 import FilePicker from '../components/ActionCamera.component';
+import * as mobilenet from '@tensorflow-models/mobilenet'
 import { decodeJpeg, bundleResourceIO, fetch } from '@tensorflow/tfjs-react-native';
 import * as tf from '@tensorflow/tfjs'
 import * as FileSystem from 'expo-file-system';
@@ -12,21 +13,22 @@ const tflite = new Tflite();
 // const flowers = ['daisy', 'dandelion', 'roses', 'sunflowers' ,'tulips']
 // const labels = ['dienteleon', 'hierbabuena', 'lluviaoro', 'mandarina', 'manzanilla', 'munaandina', 'ortiga', 'palta', 'toronjil', 'wirawira'];
 export default class Home extends React.Component {
-  model: tf.GraphModel | null = null; // mobilenet.MobileNet | null = null; // tf.LayersModel | null = null;
+  model: mobilenet.MobileNet | null = null;
+  // model: tf.GraphModel | null = null; // mobilenet.MobileNet | null = null; // tf.LayersModel | null = null;
   state = {
     ready: false,
     label: ''
   }
 
-  // async imageToTensor(fileUri: string) {
-  //   const imgB64 = await FileSystem.readAsStringAsync(fileUri, {
-  //     encoding: FileSystem.EncodingType.Base64,
-  //   });
-  //   const imgBuffer = tf.util.encodeString(imgB64, 'base64').buffer;
-  //   const raw = new Uint8Array(imgBuffer)  
-  //   const imageTensor = decodeJpeg(raw).expandDims(0);
-  //   return imageTensor;
-  // }
+  async imageToTensor(fileUri: string) {
+    const imgB64 = await FileSystem.readAsStringAsync(fileUri, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+    const imgBuffer = tf.util.encodeString(imgB64, 'base64').buffer;
+    const raw = new Uint8Array(imgBuffer)  
+    const imageTensor = decodeJpeg(raw).expandDims(0);
+    return imageTensor;
+  }
 
   // async imgToTensor(imgB64: string) {
   //   const imgBuffer = tf.util.encodeString(imgB64, 'base64').buffer;
@@ -39,46 +41,49 @@ export default class Home extends React.Component {
 
   async componentDidMount() {
     console.clear();
-    console.log('--> tflite', tflite)
-    tflite.loadModel({
-      model: 'model.tflite',// required
-      labels: 'labels.txt',  // required
-      numThreads: 1,                              // defaults to 1  
-    },
-    (err, res) => {
-      if(err)
-        console.log('-->', err);
-      else
-        console.log('-->', res);
-    });
-    // await tf.ready();
+    // console.log('--> tflite', tflite)
+    // tflite.loadModel({
+    //   model: 'model.tflite',// required
+    //   labels: 'labels.txt',  // required
+    //   numThreads: 1,                              // defaults to 1  
+    // },
+    // (err, res) => {
+    //   if(err)
+    //     console.log('-->', err);
+    //   else
+    //     console.log('-->', res);
+    // });
+    await tf.ready();
     // this.model = await tf.loadGraphModel(bundleResourceIO(modelJson, modelWeights));
     // this.model = await tf.loadLayersModel(bundleResourceIO(modelJson, modelWeights));
     // await this.model?.load();
+    this.model = await mobilenet.load()
     this.setState({ready: true});
   }
 
-  // async prediction(dataBase64: string) {
-  //   console.log('base 64')
-  //   // const imageTensor = await this.imageToTensor(dataBase64);
-  //   const imageTensor = await this.imgToTensor(dataBase64)
-  //   console.log('start prediction')
-  //   // console.log('--> data', output)
-  //   const prediction = await this.model?.predict(imageTensor) as tf.Tensor
-  //   const predictionValues = prediction.dataSync();
-  //   let maxIndex = 0;
-  //   let maxValue = predictionValues[maxIndex];
-  //   for(let item in predictionValues) {
-  //     if(predictionValues[item] > maxValue) {
-  //       maxValue = predictionValues[item];
-  //       maxIndex = +item;
-  //     }
-  //   }
-  //   this.setState({label: `${flowers[maxIndex]}-${maxValue}`})
-  //   console.log('-->', predictionValues)
-  //   console.log('-->', flowers[maxIndex], maxValue)
-  //   await ImagePicker.clean();
-  // }
+  async prediction(dataBase64: string) {
+    console.log('base 64')
+    const imageTensor = await this.imageToTensor(dataBase64);
+    // const imageTensor = await this.imgToTensor(dataBase64)
+    // console.log('start prediction')
+    // console.log('--> data', output)
+    const prediction = await this.model?.classify(imageTensor);
+    console.log('-->', prediction)
+    this.setState({label: JSON.stringify(prediction)})
+    // const predictionValues = prediction.dataSync();
+    // let maxIndex = 0;
+    // let maxValue = predictionValues[maxIndex];
+    // for(let item in predictionValues) {
+    //   if(predictionValues[item] > maxValue) {
+    //     maxValue = predictionValues[item];
+    //     maxIndex = +item;
+    //   }
+    // }
+    // this.setState({label: `${flowers[maxIndex]}-${maxValue}`})
+    // console.log('-->', predictionValues)
+    // console.log('-->', flowers[maxIndex], maxValue)
+    await ImagePicker.clean();
+  }
 
   prediction2 (uri: string) {
     tflite.runModelOnImage({
@@ -106,8 +111,8 @@ export default class Home extends React.Component {
           <Text style={{ fontSize: 18, marginBottom: 10 }}> {this.state.ready ? 'Done' : 'Loading...'} </Text>
           <Text style={{ flex: 1, fontSize: 18, marginBottom: 10 }}> {this.state.label} </Text>
           <FilePicker onTakePicture={async (dataBase64) => {
-            this.prediction2(dataBase64);
-            // this.prediction(dataBase64);
+            // this.prediction2(dataBase64);
+            this.prediction(dataBase64);
           }} />
         </View>
       // </Camera>

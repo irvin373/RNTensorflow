@@ -101,10 +101,10 @@ export default class Home extends React.Component<Props> {
       model: 'SSDMobileNet',
       // imageMean: 224,
       // imageStd: 224,
-      threshold: 0.3,       // defaults to 0.1
-      numResultsPerClass: 5,// defaults to 5
+      threshold: 0.3, // defaults to 0.1
+      numResultsPerClass: 5, // defaults to 5
     },
-    (err, res) => {
+    (err: any, res: any) => {
       if(err) {
         console.log(err);
       }
@@ -116,10 +116,7 @@ export default class Home extends React.Component<Props> {
           const labelKey:labelKeys = result.label;
           const index = mapedLabels[labelKey];
           navigation.navigate('Plantas');
-          navigation.push('PlantDetail', {
-            plantId: index
-          });
-          // this.setState({label: JSON.stringify(res)})
+          navigation.push('PlantDetail', {plantId: index});
         } else {
           Alert.alert('Sin Coincidencia', 'La planta no esta dentro del sistema tuquypac');
         }

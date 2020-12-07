@@ -7,6 +7,7 @@ import {name as appName} from './app.json';
 import TQImage from './src/components/TQImage';
 import DataBase from './src/utils/DataBase';
 import Camera from './src/screens/Camera.screen';
+import Camera2 from './src/screens/Camera2.screen';
 import PlantScreen from './src/screens/Plants.screen';
 import PlantDetail from './src/screens/PlantDetail.screen';
 import RecipeDetail from './src/screens/RecipeDetail.screen';
@@ -40,6 +41,15 @@ function CameraStackScreen() {
     <CameraStack.Navigator>
       <HomeStack.Screen options={headerStyle} name="Camara" component={Camera} />
     </CameraStack.Navigator>
+  );
+}
+
+const CameraStack2 = createStackNavigator();
+function CameraStackScreen2() {
+  return (
+    <CameraStack2.Navigator>
+      <HomeStack.Screen options={headerStyle} name="Camara" component={Camera2} />
+    </CameraStack2.Navigator>
   );
 }
 
@@ -82,6 +92,7 @@ class HomeApp extends React.Component {
           }}>
           <Tab.Screen options={TabOption('Plantas', 'plant')} name="Plantas" component={HomeStackScreen} />
           <Tab.Screen options={TabOption('Camara', 'camara')} name="Camara" component={CameraStackScreen} />
+          <Tab.Screen options={TabOption('Camara', 'camara')} name="Camara2" component={CameraStackScreen2} />
           <Tab.Screen options={TabOption('Recetas', 'tea')} name="Recetas" component={SettingsStackScreen} />
         </Tab.Navigator>
       </NavigationContainer>

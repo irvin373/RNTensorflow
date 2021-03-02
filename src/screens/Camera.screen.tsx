@@ -1,6 +1,5 @@
 import * as React from 'react';
 import {Alert, Image, Text, View, Dimensions, Platform} from 'react-native';
-import * as tf from '@tensorflow/tfjs'
 import ImagePicker from 'react-native-image-crop-picker';
 import Tflite from 'tflite-react-native';
 import styles from '../utils/styles';
@@ -30,7 +29,6 @@ const mapedLabels = {
 type labelKeys = keyof typeof mapedLabels;
 
 export default class Home extends React.Component<Props> {
-  model: tf.GraphModel | null = null; // mobilenet.MobileNet | null = null; // tf.LayersModel | null = null;
   state = {
     ready: false,
     label: '',

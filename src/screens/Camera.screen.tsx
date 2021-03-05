@@ -11,6 +11,15 @@ type Props = {
   navigation: any
 }
 
+type State = {
+  err: any,
+  res: any,
+  ready: boolean,
+  label: string
+  imgSrc: any
+  path: string
+}
+
 const mapedLabels = {
   'dienteleon': 10,
   'hierbabuena': 6,
@@ -28,27 +37,29 @@ const mapedLabels = {
 
 type labelKeys = keyof typeof mapedLabels;
 
-export default class Home extends React.Component<Props> {
+export default class Home extends React.Component<Props, State> {
   state = {
+    err: null,
+    res: null,
     ready: false,
     label: '',
+    path: '',
     imgSrc: require('../../assets/img/mate.jpg'),
   }
 
-  async componentDidMount() {
-    console.clear();
+  componentDidMount() {
     tflite.loadModel({
       model: 'model.tflite',// required
       labels: 'labels.txt',  // required
-      numThreads: 1,                              // defaults to 1  
+      numThreads: 1, // defaults to 1  
     },
     (err, res) => {
       if(err)
         console.log('--> error load model', err);
       else
         console.log('--> model loaded: ', res);
+      this.setState({ready: true, err: JSON.stringify(err), res: JSON.stringify(res)});
     });
-    this.setState({ready: true});
   }
 
   async openImagePicker (type: string): Promise<any> {
@@ -130,8 +141,11 @@ export default class Home extends React.Component<Props> {
       height: 224,
       // includeBase64: true
     } as any)
-    this.setState({imgSrc: {uri: result.path}})
-    this.prediction(data.path);
+    this.setState({path: data.path, imgSrc: {uri: result.path}}, () => {
+      setTimeout(() => {
+        this.prediction(data.path);
+      }, 500)
+    })
   }
 
   render() {
@@ -139,9 +153,9 @@ export default class Home extends React.Component<Props> {
       <View style={{flex: 1}}>
         <View style={{flex: 1, alignSelf: 'center', marginTop: 20}}>
           <Text style={{flex: 1, fontSize: 16, marginHorizontal: 12}}>
-            {'Seleccione una imagen, mediante camara o la galeria para el reconocimiento'}
+            {`Seleccione una imagen, mediante camara o la galeria para el reconocimiento`}
           </Text>
-          <Image resizeMethod={'resize'} style={{height: dw, width: dw}} source={this.state.imgSrc} />
+          <Image resizeMethod={'resize'} style={{height: dw, width: dw, marginTop: 20}} source={this.state.imgSrc} />
           <Text style={{flex: 1, fontSize: 18, marginBottom: 10}}> {this.state.label} </Text>
         </View>
         <View style={{flex: 0, marginBottom: 50, flexDirection: 'row', alignSelf: 'center'}}>

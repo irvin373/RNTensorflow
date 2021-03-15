@@ -6,6 +6,7 @@ import styles from '../utils/styles';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 const { width: dw } = Dimensions.get('window');
 const tflite = new Tflite();
+const mobileNet = new Tflite();
 
 type Props = {
   navigation: any
@@ -52,14 +53,12 @@ export default class Home extends React.Component<Props, State> {
       model: 'model.tflite',// required
       labels: 'labels.txt',  // required
       numThreads: 1, // defaults to 1  
-    },
-    (err, res) => {
-      if(err)
-        console.log('--> error load model', err);
-      else
-        console.log('--> model loaded: ', res);
-      this.setState({ready: true, err: JSON.stringify(err), res: JSON.stringify(res)});
-    });
+    }, () => {});
+    mobileNet.loadModel({
+      model: 'mobilenet224.tflite',
+      labels: 'labels1.txt',
+      numThreads: 1  
+    }, () => {});
   }
 
   async openImagePicker (type: string): Promise<any> {
@@ -105,6 +104,14 @@ export default class Home extends React.Component<Props, State> {
   }
 
   prediction (uri: string) {
+    mobileNet.runModelOnImage({
+      path: uri,
+      model: 'SSDMobileNet',
+    },
+    (err: any, res: any) => {
+      console.log('--> res', res)
+    });
+
     tflite.runModelOnImage({
       path: uri,
       model: 'SSDMobileNet',
@@ -114,21 +121,15 @@ export default class Home extends React.Component<Props, State> {
       numResultsPerClass: 5, // defaults to 5
     },
     (err: any, res: any) => {
-      if(err) {
-        console.log(err);
-      }
-      else {
-        console.log(res);
-        const {navigation} = this.props;
-        const result = res[0];
-        if (result.confidence > 0.6) {
-          const labelKey:labelKeys = result.label;
-          const index = mapedLabels[labelKey];
-          navigation.navigate('Plantas');
-          navigation.push('PlantDetail', {plantId: index});
-        } else {
-          Alert.alert('Sin Coincidencia', 'La planta no esta dentro del sistema tuquypac');
-        }
+      const {navigation} = this.props;
+      const result = res[0];
+      if (result.confidence > 0.8) {
+        const labelKey:labelKeys = result.label;
+        const index = mapedLabels[labelKey];
+        navigation.navigate('Plantas');
+        navigation.push('PlantDetail', {plantId: index});
+      } else {
+        Alert.alert('Sin Coincidencia', 'La planta no esta dentro del sistema tuquypac');
       }
     });
   }

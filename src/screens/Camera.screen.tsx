@@ -17,6 +17,7 @@ type State = {
   res: any,
   ready: boolean,
   label: string
+  newLabel: string
   imgSrc: any
   path: string
 }
@@ -44,6 +45,7 @@ export default class Home extends React.Component<Props, State> {
     res: null,
     ready: false,
     label: '',
+    newLabel: '',
     path: '',
     imgSrc: require('../../assets/img/mate.jpg'),
   }
@@ -110,6 +112,7 @@ export default class Home extends React.Component<Props, State> {
     },
     (err: any, res: any) => {
       console.log('--> res', res)
+      this.setState({newLabel: JSON.stringify(res)})
     });
 
     tflite.runModelOnImage({
@@ -156,8 +159,9 @@ export default class Home extends React.Component<Props, State> {
           <Text style={{flex: 1, fontSize: 16, marginHorizontal: 12}}>
             {`Seleccione una imagen, mediante camara o la galeria para el reconocimiento`}
           </Text>
-          <Image resizeMethod={'resize'} style={{height: dw, width: dw, marginTop: 20}} source={this.state.imgSrc} />
+          <Image resizeMethod={'resize'} style={{height: 250, width: 250, marginTop: 20}} source={this.state.imgSrc} />
           <Text style={{flex: 1, fontSize: 18, marginBottom: 10}}> {this.state.label} </Text>
+          <Text style={{flex: 1, fontSize: 18, marginBottom: 10}}> {this.state.newLabel} </Text>
         </View>
         <View style={{flex: 0, marginBottom: 50, flexDirection: 'row', alignSelf: 'center'}}>
           <TouchableOpacity style={styles.actionBtn} onPress={() => { this.predictPicture('camera'); }}>

@@ -105,34 +105,57 @@ export default class Home extends React.Component<Props, State> {
     }
   }
 
-  prediction (uri: string) {
-    tflite.runModelOnImage({
-      path: uri,
-      model: 'SSDMobileNet',
-      // imageMean: 224,
-      // imageStd: 224,
-      threshold: 0.3, // defaults to 0.1
-      numResultsPerClass: 5, // defaults to 5
-    }, (err: any, res: any) => {
-      const {navigation} = this.props;
-      const result = res[0];
-      this.setState({label: JSON.stringify(res)})
-      if (result.confidence > 0.8) {
-        const labelKey:labelKeys = result.label;
-        const index = mapedLabels[labelKey];
-        navigation.navigate('Plantas');
-        navigation.push('PlantDetail', {plantId: index});
-      } else {
-        Alert.alert('Sin Coincidencia', 'La planta no esta dentro del sistema tuquypac');
-      }
+  runCustomModel(uri: string) {
+    tflite.loadModel({
+      model: 'model.tflite',// required
+      labels: 'labels.txt',  // required
+      numThreads: 1, // defaults to 1  
+    }, () => {
+      tflite.runModelOnImage({
+        path: uri,
+        model: 'SSDMobileNet',
+        // imageMean: 224,
+        // imageStd: 224,
+        threshold: 0.3, // defaults to 0.1
+        numResultsPerClass: 5, // defaults to 5
+      }, (err: any, res: any) => {
+        const {navigation} = this.props;
+        const result = res[0];
+        this.setState({label: JSON.stringify(res)})
+        if (result.confidence > 0.9) {
+          const labelKey:labelKeys = result.label;
+          const index = mapedLabels[labelKey];
+          navigation.navigate('Plantas');
+          navigation.push('PlantDetail', {plantId: index});
+        } else {
+          Alert.alert('Sin Coincidencia', 'La planta no esta dentro del sistema tuquypac');
+        }
+      });
     });
-    // mobileNet.runModelOnImage({
-    //   path: uri,
-    //   model: 'SSDMobileNet',
-    // }, (err: any, res: any) => {
-    //   console.log('--> res', res)
-    //   this.setState({newLabel: JSON.stringify(res)})
-    // });
+  }
+
+  prediction(uri: string) {
+    tflite.loadModel({
+      model: 'mobilenet224.tflite',
+      labels: 'labels1.txt',
+      numThreads: 1  
+    }, () => {
+      tflite.runModelOnImage({
+        path: uri,
+        model: 'SSDMobileNet',
+      }, (err: any, res: any) => {
+        this.setState({newLabel: JSON.stringify(res)}, () => {
+          const result = res[0];
+          if (result.confidence < 0.9) {
+            setTimeout(() => {
+              this.runCustomModel(uri);
+            }, 500)
+          } else {
+            Alert.alert('Sin Coincidencia', `se detecto ${result.label} no una planta`);
+          }
+        })
+      });
+    });
   }
 
   predictPicture = async (type: 'camera' | 'gallery') => {

@@ -11,6 +11,7 @@ import PlantScreen from './src/screens/Plants.screen';
 import PlantDetail from './src/screens/PlantDetail.screen';
 import RecipeDetail from './src/screens/RecipeDetail.screen';
 import RecipeScreen from './src/screens/Recipes.screen';
+import InformationScreen from './src/screens/Info.screen';
 import color from './src/utils/color';
 
 const headerStyle = {
@@ -39,6 +40,15 @@ function CameraStackScreen() {
   return (
     <CameraStack.Navigator>
       <HomeStack.Screen options={headerStyle} name="Camara" component={Camera} />
+    </CameraStack.Navigator>
+  );
+}
+
+const InformationStack = createStackNavigator();
+function InformationStackScreen() {
+  return (
+    <CameraStack.Navigator>
+      <HomeStack.Screen options={headerStyle} name="EL SISTEMA TUKUYPAQ" component={InformationScreen} />
     </CameraStack.Navigator>
   );
 }
@@ -83,6 +93,7 @@ class HomeApp extends React.Component {
           <Tab.Screen options={TabOption('Plantas', 'plant')} name="Plantas" component={HomeStackScreen} />
           <Tab.Screen options={TabOption('Camara', 'camara')} name="Camara" component={CameraStackScreen} />
           <Tab.Screen options={TabOption('Recetas', 'tea')} name="Recetas" component={SettingsStackScreen} />
+          <Tab.Screen options={TabOption('Informacion', 'plant')} name="Informacion" component={InformationStackScreen} />
         </Tab.Navigator>
       </NavigationContainer>
     );

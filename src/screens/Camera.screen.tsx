@@ -3,10 +3,10 @@ import {Alert, Image, Text, View, Dimensions, Platform} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import Tflite from 'tflite-react-native';
 import styles from '../utils/styles';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { ScrollView, TouchableOpacity } from 'react-native-gesture-handler';
 const { width: dw } = Dimensions.get('window');
+// const mobileNet = new Tflite();
 const tflite = new Tflite();
-const mobileNet = new Tflite();
 
 type Props = {
   navigation: any
@@ -56,11 +56,11 @@ export default class Home extends React.Component<Props, State> {
       labels: 'labels.txt',  // required
       numThreads: 1, // defaults to 1  
     }, () => {});
-    mobileNet.loadModel({
-      model: 'mobilenet224.tflite',
-      labels: 'labels1.txt',
-      numThreads: 1  
-    }, () => {});
+    // mobileNet.loadModel({
+    //   model: 'mobilenet224.tflite',
+    //   labels: 'labels1.txt',
+    //   numThreads: 1  
+    // }, () => {});
   }
 
   async openImagePicker (type: string): Promise<any> {
@@ -106,15 +106,6 @@ export default class Home extends React.Component<Props, State> {
   }
 
   prediction (uri: string) {
-    mobileNet.runModelOnImage({
-      path: uri,
-      model: 'SSDMobileNet',
-    },
-    (err: any, res: any) => {
-      console.log('--> res', res)
-      this.setState({newLabel: JSON.stringify(res)})
-    });
-
     tflite.runModelOnImage({
       path: uri,
       model: 'SSDMobileNet',
@@ -122,10 +113,10 @@ export default class Home extends React.Component<Props, State> {
       // imageStd: 224,
       threshold: 0.3, // defaults to 0.1
       numResultsPerClass: 5, // defaults to 5
-    },
-    (err: any, res: any) => {
+    }, (err: any, res: any) => {
       const {navigation} = this.props;
       const result = res[0];
+      this.setState({label: JSON.stringify(res)})
       if (result.confidence > 0.8) {
         const labelKey:labelKeys = result.label;
         const index = mapedLabels[labelKey];
@@ -135,6 +126,13 @@ export default class Home extends React.Component<Props, State> {
         Alert.alert('Sin Coincidencia', 'La planta no esta dentro del sistema tuquypac');
       }
     });
+    // mobileNet.runModelOnImage({
+    //   path: uri,
+    //   model: 'SSDMobileNet',
+    // }, (err: any, res: any) => {
+    //   console.log('--> res', res)
+    //   this.setState({newLabel: JSON.stringify(res)})
+    // });
   }
 
   predictPicture = async (type: 'camera' | 'gallery') => {
@@ -155,15 +153,15 @@ export default class Home extends React.Component<Props, State> {
   render() {
     return (
       <View style={{flex: 1}}>
-        <View style={{flex: 1, alignSelf: 'center', marginTop: 20}}>
+        <ScrollView style={{flex: 1, alignSelf: 'center', marginTop: 20}}>
           <Text style={{flex: 1, fontSize: 16, marginHorizontal: 12}}>
             {`Seleccione una imagen, mediante camara o la galeria para el reconocimiento`}
           </Text>
           <Image resizeMethod={'resize'} style={{height: 250, width: 250, marginTop: 20}} source={this.state.imgSrc} />
           <Text style={{flex: 1, fontSize: 18, marginBottom: 10}}> {this.state.label} </Text>
           <Text style={{flex: 1, fontSize: 18, marginBottom: 10}}> {this.state.newLabel} </Text>
-        </View>
-        <View style={{flex: 0, marginBottom: 50, flexDirection: 'row', alignSelf: 'center'}}>
+        </ScrollView>
+        <View style={{flex: 0, marginBottom: 25, flexDirection: 'row', alignSelf: 'center'}}>
           <TouchableOpacity style={styles.actionBtn} onPress={() => { this.predictPicture('camera'); }}>
             <Text style={styles.textBtn}>Camara</Text>
           </TouchableOpacity>

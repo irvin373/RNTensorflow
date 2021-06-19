@@ -24,19 +24,22 @@ type State = {
 
 const mapedLabels = {
   'dienteleon': 10,
+  'dienteleonFlor': 10,
   'hierbabuena': 6,
   'lluviaoro': 3,
   'mandarina': 9,
+  'mandarinaFruta': 9,
   'manzanilla': 5,
   'munaandina': 1,
   'ortiga': 11,
   'palta': 7,
+  'paltaFruta': 7,
   'lavanda': 8,
   'toronjil': 2,
   'wirawira': 4,
   'jengibre': 12,
 };
-
+ 
 type labelKeys = keyof typeof mapedLabels;
 
 export default class Home extends React.Component<Props, State> {
@@ -122,7 +125,7 @@ export default class Home extends React.Component<Props, State> {
         const {navigation} = this.props;
         const result = res[0];
         this.setState({label: JSON.stringify(res)})
-        if (result.confidence > 0.9) {
+        if (result.confidence > 0.7) {
           const labelKey:labelKeys = result.label;
           const index = mapedLabels[labelKey];
           navigation.navigate('Plantas');
@@ -135,27 +138,28 @@ export default class Home extends React.Component<Props, State> {
   }
 
   prediction(uri: string) {
-    tflite.loadModel({
-      model: 'mobilenet224.tflite',
-      labels: 'labels1.txt',
-      numThreads: 1  
-    }, () => {
-      tflite.runModelOnImage({
-        path: uri,
-        model: 'SSDMobileNet',
-      }, (err: any, res: any) => {
-        this.setState({newLabel: JSON.stringify(res)}, () => {
-          const result = res[0];
-          if (result.confidence < 0.9) {
-            setTimeout(() => {
-              this.runCustomModel(uri);
-            }, 500)
-          } else {
-            Alert.alert('Sin Coincidencia', `se detecto ${result.label} no una planta`);
-          }
-        })
-      });
-    });
+    this.runCustomModel(uri);
+    // tflite.loadModel({
+    //   model: 'mobilenet224.tflite',
+    //   labels: 'labels1.txt',
+    //   numThreads: 1  
+    // }, () => {
+    //   tflite.runModelOnImage({
+    //     path: uri,
+    //     model: 'SSDMobileNet',
+    //   }, (err: any, res: any) => {
+    //     this.setState({newLabel: JSON.stringify(res)}, () => {
+    //       const result = res[0];
+    //       if (result.confidence < 0.9) {
+    //         setTimeout(() => {
+    //           this.runCustomModel(uri);
+    //         }, 500)
+    //       } else {
+    //         Alert.alert('Sin Coincidencia', `se detecto ${result.label} no una planta`);
+    //       }
+    //     })
+    //   });
+    // });
   }
 
   predictPicture = async (type: 'camera' | 'gallery') => {

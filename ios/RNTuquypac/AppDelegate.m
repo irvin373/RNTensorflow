@@ -4,10 +4,6 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 
-#import <UMCore/UMModuleRegistry.h>
-#import <UMReactNativeAdapter/UMNativeModulesProxy.h>
-// #import <UMReactNativeAdapter/UMModuleRegistryAdapter.h>
-
 #ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
@@ -28,8 +24,6 @@ static void InitializeFlipper(UIApplication *application) {
 #endif
 
 @interface AppDelegate () <RCTBridgeDelegate>
-
-// @property (nonatomic, strong) UMModuleRegistryAdapter *moduleRegistryAdapter;
  
 @end
 
@@ -49,8 +43,6 @@ static void InitializeFlipper(UIApplication *application) {
       NSLog(@" %@", name);
     }
   }
-
-// self.moduleRegistryAdapter = [[UMModuleRegistryAdapter alloc] initWithModuleRegistryProvider:[[UMModuleRegistryProvider alloc] init]];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
